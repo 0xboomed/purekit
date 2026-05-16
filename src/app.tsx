@@ -17,10 +17,10 @@ export function App() {
       <div className="grid h-screen grid-rows-[40px_1fr_24px] bg-white text-gray-900 dark:bg-surface-dark dark:text-gray-100">
         <Toolbar />
 
-        <main className="relative flex overflow-hidden">
+        <main className="relative flex min-h-0 overflow-hidden">
           {/* Editor pane */}
           <div
-            className={`overflow-hidden ${viewMode === 'preview' ? 'hidden' : ''} ${viewMode === 'split' || viewMode === 'editor' ? 'w-full' : 'hidden'} ${viewMode === 'split' ? 'md:w-1/2' : 'w-full'}`}
+            className={`h-full ${viewMode === 'preview' ? 'hidden' : ''} ${viewMode === 'split' || viewMode === 'editor' ? 'w-full' : 'hidden'} ${viewMode === 'split' ? 'md:w-1/2' : 'w-full'}`}
           >
             <EditorPane />
           </div>
@@ -32,7 +32,7 @@ export function App() {
 
           {/* Preview pane */}
           <div
-            className={`overflow-hidden ${viewMode === 'editor' ? 'hidden' : ''} ${viewMode === 'split' ? 'hidden md:block md:w-1/2' : 'w-full'}`}
+            className={`min-h-0 ${viewMode === 'editor' ? 'hidden' : ''} ${viewMode === 'split' ? 'hidden md:block md:w-1/2' : 'w-full'}`}
           >
             <PreviewPane />
           </div>

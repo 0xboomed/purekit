@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import CodeMirror from '@uiw/react-codemirror'
 import { markdown, markdownLanguage } from '@codemirror/lang-markdown'
 import { languages } from '@codemirror/language-data'
@@ -132,11 +132,26 @@ export function EditorPane() {
     return () => preview.removeEventListener('scroll', handlePreviewScroll)
   }, [])
 
+  const [editorHeight, setEditorHeight] = useState('100%')
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        setEditorHeight(`${entry.contentRect.height}px`)
+      }
+    })
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <div className="h-full">
+    <div ref={containerRef} className="h-full">
       <CodeMirror
         value={markdownContent}
-        height="100%"
+        height={editorHeight}
         theme={theme === 'dark' ? 'dark' : 'light'}
         extensions={extensions}
         onChange={onChange}
