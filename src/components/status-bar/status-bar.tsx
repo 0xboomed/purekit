@@ -1,8 +1,10 @@
 import { useAppStore } from '@/stores/use-app-store'
 import { Check } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { useT } from '@/i18n/context'
 
 export function StatusBar() {
+  const { t } = useT()
   const cursorLine = useAppStore((s) => s.cursorLine)
   const cursorCol = useAppStore((s) => s.cursorCol)
   const lastSavedAt = useAppStore((s) => s.lastSavedAt)
@@ -19,7 +21,7 @@ export function StatusBar() {
     <footer className="flex h-6 shrink-0 items-center justify-between border-t border-border bg-surface px-3 text-[11px] text-gray-400 dark:border-border-dark dark:bg-surface-dark dark:text-gray-500">
       <div className="flex items-center gap-4">
         <span>
-          行 {cursorLine}, 列 {cursorCol}
+          {t('status.lineCol').replace('{line}', String(cursorLine)).replace('{col}', String(cursorCol))}
         </span>
         <span>UTF-8</span>
         <span>Markdown</span>
@@ -28,10 +30,10 @@ export function StatusBar() {
         {showSaved ? (
           <>
             <Check size={10} className="text-emerald-500" />
-            <span className="text-emerald-500">自动保存</span>
+            <span className="text-emerald-500">{t('status.autoSaved')}</span>
           </>
         ) : (
-          <span>已保存</span>
+          <span>{t('status.saved')}</span>
         )}
       </div>
     </footer>

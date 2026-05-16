@@ -21,6 +21,7 @@ export const useAppStore = create<StoreState>()(
         viewMode: state.viewMode,
         editorPaneRatio: state.editorPaneRatio,
         pdfSettings: state.pdfSettings,
+        locale: state.locale,
       }),
     },
   ),

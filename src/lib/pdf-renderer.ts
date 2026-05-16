@@ -7,18 +7,19 @@ import rehypeSlug from 'rehype-slug'
 import rehypeStringify from 'rehype-stringify'
 import type { PdfSettings } from '@/types/pdf'
 
-const PAGE_SIZES: Record<string, [number, number]> = {
-  A4: [210, 297],
-  A3: [297, 420],
-  Letter: [215.9, 279.4],
-  Legal: [215.9, 355.6],
+const PAGE_SIZES = {
+  A4: [210, 297] as [number, number],
+  A3: [297, 420] as [number, number],
+  Letter: [215.9, 279.4] as [number, number],
+  Legal: [215.9, 355.6] as [number, number],
 }
 
 export function getPageSizeMm(
   size: string,
   orientation: string,
 ): [number, number] {
-  const [w, h] = PAGE_SIZES[size] ?? PAGE_SIZES.A4
+  const dims = PAGE_SIZES[size as keyof typeof PAGE_SIZES] ?? PAGE_SIZES.A4
+  const [w, h] = dims
   return orientation === 'landscape' ? [h, w] : [w, h]
 }
 

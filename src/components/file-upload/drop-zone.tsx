@@ -2,8 +2,10 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { FileText } from 'lucide-react'
 import { useAppStore } from '@/stores/use-app-store'
 import { useFileUpload } from '@/hooks/use-file-upload'
+import { useT } from '@/i18n/context'
 
 export function DropZone() {
+  const { t } = useT()
   const [isDragging, setIsDragging] = useState(false)
   const dragCounter = useRef(0)
   const setMarkdownContent = useAppStore((s) => s.setMarkdownContent)
@@ -76,9 +78,9 @@ export function DropZone() {
       <div className="flex flex-col items-center gap-3 rounded-xl border-2 border-dashed border-blue-400 bg-white/90 px-12 py-10 dark:bg-gray-900/90">
         <FileText size={48} className="text-blue-500" />
         <p className="text-lg font-medium text-gray-700 dark:text-gray-200">
-          释放文件以加载
+          {t('dropzone.release')}
         </p>
-        <p className="text-sm text-gray-400">支持 .md / .markdown / .txt</p>
+        <p className="text-sm text-gray-400">{t('dropzone.support')}</p>
       </div>
     </div>
   )

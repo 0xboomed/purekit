@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { X, Download, Loader2, FileText } from 'lucide-react'
 import { useAppStore } from '@/stores/use-app-store'
+import { useT } from '@/i18n/context'
 
 export function PdfPreviewModal() {
+  const { t } = useT()
   const showPdfPreview = useAppStore((s) => s.showPdfPreview)
   const setShowPdfPreview = useAppStore((s) => s.setShowPdfPreview)
   const setIsExporting = useAppStore((s) => s.setIsExporting)
@@ -68,7 +70,7 @@ export function PdfPreviewModal() {
       <div className="no-print flex h-11 shrink-0 items-center justify-between border-b border-gray-200 bg-white px-4">
         <div className="flex items-center gap-2">
           <FileText size={16} className="text-brand" />
-          <span className="text-sm font-medium text-gray-700">PDF 预览</span>
+          <span className="text-sm font-medium text-gray-700">{t('pdf.preview')}</span>
         </div>
 
         <div className="flex items-center gap-2">
@@ -78,7 +80,7 @@ export function PdfPreviewModal() {
             className="flex items-center gap-1.5 rounded-md bg-brand px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-brand-light disabled:opacity-40"
           >
             {isExporting ? <Loader2 size={14} className="animate-spin" /> : <Download size={14} />}
-            保存 PDF
+            {t('pdf.savePdf')}
           </button>
           <button
             onClick={handleClose}
@@ -95,7 +97,7 @@ export function PdfPreviewModal() {
           <div className="absolute inset-0 z-10 flex items-center justify-center bg-gray-200/80">
             <div className="flex flex-col items-center gap-3">
               <Loader2 size={32} className="animate-spin text-brand" />
-              <span className="text-sm text-gray-500">正在渲染预览...</span>
+              <span className="text-sm text-gray-500">{t('pdf.rendering')}</span>
             </div>
           </div>
         )}

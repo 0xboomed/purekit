@@ -1,6 +1,6 @@
 import { RotateCcw, X } from 'lucide-react'
 import { useAppStore } from '@/stores/use-app-store'
-import { DEFAULT_PDF_SETTINGS } from '@/types/pdf'
+import { useT } from '@/i18n/context'
 import type { PageSize } from '@/types/pdf'
 
 const PAGE_SIZES: { value: PageSize; label: string }[] = [
@@ -11,6 +11,7 @@ const PAGE_SIZES: { value: PageSize; label: string }[] = [
 ]
 
 export function PdfSettingsPanel() {
+  const { t } = useT()
   const showSettingsPanel = useAppStore((s) => s.showSettingsPanel)
   const toggleSettingsPanel = useAppStore((s) => s.toggleSettingsPanel)
   const pdfSettings = useAppStore((s) => s.pdfSettings)
@@ -32,7 +33,7 @@ export function PdfSettingsPanel() {
         {/* Header */}
         <div className="flex h-11 items-center justify-between border-b border-gray-200 px-4">
           <span className="text-sm font-semibold text-gray-700">
-            PDF 设置
+            {t('pdf.title')}
           </span>
           <button
             onClick={toggleSettingsPanel}
@@ -45,7 +46,7 @@ export function PdfSettingsPanel() {
         {/* Content */}
         <div className="flex-1 overflow-y-auto p-4">
           {/* Page size */}
-          <Section title="页面大小">
+          <Section title={t('pdf.pageSize')}>
             <select
               value={pdfSettings.pageSize}
               onChange={(e) => setPdfSettings({ pageSize: e.target.value as PageSize })}
@@ -58,7 +59,7 @@ export function PdfSettingsPanel() {
           </Section>
 
           {/* Orientation */}
-          <Section title="方向">
+          <Section title={t('pdf.orientation')}>
             <div className="flex gap-2">
               <button
                 onClick={() => setPdfSettings({ orientation: 'portrait' })}
@@ -68,7 +69,7 @@ export function PdfSettingsPanel() {
                     : 'border-gray-200 text-gray-600 hover:bg-gray-50'
                 }`}
               >
-                纵向
+                {t('pdf.portrait')}
               </button>
               <button
                 onClick={() => setPdfSettings({ orientation: 'landscape' })}
@@ -78,31 +79,31 @@ export function PdfSettingsPanel() {
                     : 'border-gray-200 text-gray-600 hover:bg-gray-50'
                 }`}
               >
-                横向
+                {t('pdf.landscape')}
               </button>
             </div>
           </Section>
 
           {/* Margins */}
-          <Section title="页边距 (mm)">
+          <Section title={t('pdf.margins')}>
             <div className="grid grid-cols-2 gap-2">
               <MarginInput
-                label="上"
+                label={t('pdf.marginTop')}
                 value={pdfSettings.marginTop}
                 onChange={(v) => setPdfSettings({ marginTop: v })}
               />
               <MarginInput
-                label="下"
+                label={t('pdf.marginBottom')}
                 value={pdfSettings.marginBottom}
                 onChange={(v) => setPdfSettings({ marginBottom: v })}
               />
               <MarginInput
-                label="左"
+                label={t('pdf.marginLeft')}
                 value={pdfSettings.marginLeft}
                 onChange={(v) => setPdfSettings({ marginLeft: v })}
               />
               <MarginInput
-                label="右"
+                label={t('pdf.marginRight')}
                 value={pdfSettings.marginRight}
                 onChange={(v) => setPdfSettings({ marginRight: v })}
               />
@@ -110,7 +111,7 @@ export function PdfSettingsPanel() {
           </Section>
 
           {/* Header */}
-          <Section title="页眉">
+          <Section title={t('pdf.header')}>
             <label className="flex items-center gap-2">
               <input
                 type="checkbox"
@@ -118,17 +119,17 @@ export function PdfSettingsPanel() {
                 onChange={(e) => setPdfSettings({ showHeader: e.target.checked })}
                 className="rounded border-gray-300 text-brand focus:ring-brand"
               />
-              <span className="text-sm text-gray-600">显示页眉</span>
+              <span className="text-sm text-gray-600">{t('pdf.showHeader')}</span>
             </label>
             {pdfSettings.showHeader && (
               <p className="mt-1.5 text-xs text-gray-400">
-                自动提取第一个标题作为页眉
+                {t('pdf.headerHint')}
               </p>
             )}
           </Section>
 
           {/* Footer */}
-          <Section title="页脚">
+          <Section title={t('pdf.footer')}>
             <label className="flex items-center gap-2">
               <input
                 type="checkbox"
@@ -136,7 +137,7 @@ export function PdfSettingsPanel() {
                 onChange={(e) => setPdfSettings({ showFooter: e.target.checked })}
                 className="rounded border-gray-300 text-brand focus:ring-brand"
               />
-              <span className="text-sm text-gray-600">显示页脚</span>
+              <span className="text-sm text-gray-600">{t('pdf.showFooter')}</span>
             </label>
             {pdfSettings.showFooter && (
               <label className="mt-2 flex items-center gap-2">
@@ -146,7 +147,7 @@ export function PdfSettingsPanel() {
                   onChange={(e) => setPdfSettings({ showPageNumbers: e.target.checked })}
                   className="rounded border-gray-300 text-brand focus:ring-brand"
                 />
-                <span className="text-sm text-gray-600">显示页码</span>
+                <span className="text-sm text-gray-600">{t('pdf.showPageNumbers')}</span>
               </label>
             )}
           </Section>
@@ -161,7 +162,7 @@ export function PdfSettingsPanel() {
             className="flex w-full items-center justify-center gap-1.5 rounded-md border border-gray-200 px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-gray-50"
           >
             <RotateCcw size={14} />
-            恢复默认
+            {t('pdf.reset')}
           </button>
         </div>
       </div>

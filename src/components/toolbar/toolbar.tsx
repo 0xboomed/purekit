@@ -4,15 +4,16 @@ import {
   Moon,
   Sun,
   Download,
-  FileText,
   Settings,
   Loader2,
 } from 'lucide-react'
 import { useAppStore } from '@/stores/use-app-store'
 import { FileUpload } from '@/components/file-upload/file-upload'
 import { exportPdf } from '@/lib/pdf-export'
+import { useT } from '@/i18n/context'
 
 export function Toolbar() {
+  const { t } = useT()
   const theme = useAppStore((s) => s.theme)
   const toggleTheme = useAppStore((s) => s.toggleTheme)
   const viewMode = useAppStore((s) => s.viewMode)
@@ -36,12 +37,7 @@ export function Toolbar() {
 
   return (
     <header className="flex h-10 shrink-0 items-center justify-between border-b border-border bg-surface px-3 dark:border-border-dark dark:bg-surface-dark">
-      <div className="flex items-center gap-2.5">
-        <FileText size={20} className="text-brand" />
-        <span className="text-sm font-semibold tracking-tight text-gray-800 dark:text-gray-200">
-          Printdown
-        </span>
-      </div>
+      <div className="flex items-center gap-1.5" />
 
       <div className="flex items-center gap-0.5">
         {/* View mode toggle */}
@@ -56,7 +52,7 @@ export function Toolbar() {
                   : 'text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300'
               }`}
             >
-              {mode === 'editor' ? '编辑' : mode === 'preview' ? '预览' : '双栏'}
+              {mode === 'editor' ? t('toolbar.editor') : mode === 'preview' ? t('toolbar.preview') : t('toolbar.split')}
             </button>
           ))}
         </div>
@@ -64,14 +60,14 @@ export function Toolbar() {
         <button
           onClick={toggleTheme}
           className="rounded-md p-1.5 text-gray-400 transition-colors hover:bg-bg-secondary hover:text-gray-600 dark:text-gray-500 dark:hover:bg-bg-secondary-dark dark:hover:text-gray-300"
-          title={theme === 'light' ? '切换暗色主题' : '切换亮色主题'}
+          title={theme === 'light' ? t('toolbar.themeLight') : t('toolbar.themeDark')}
         >
           {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
         </button>
 
         <label
           className="cursor-pointer rounded-md p-1.5 text-gray-400 transition-colors hover:bg-bg-secondary hover:text-gray-600 dark:text-gray-500 dark:hover:bg-bg-secondary-dark dark:hover:text-gray-300"
-          title="上传文件"
+          title={t('toolbar.upload')}
         >
           <FileUp size={16} />
           <FileUpload />
@@ -80,7 +76,7 @@ export function Toolbar() {
         <button
           onClick={toggleSettingsPanel}
           className="rounded-md p-1.5 text-gray-400 transition-colors hover:bg-bg-secondary hover:text-gray-600 dark:text-gray-500 dark:hover:bg-bg-secondary-dark dark:hover:text-gray-300"
-          title="PDF 设置"
+          title={t('toolbar.pdfSettings')}
         >
           <Settings size={16} />
         </button>
@@ -89,10 +85,10 @@ export function Toolbar() {
           onClick={handleExport}
           disabled={exporting}
           className="ml-1 flex items-center gap-1.5 rounded-md bg-brand px-2.5 py-1 text-xs font-medium text-white transition-colors hover:bg-brand-light disabled:opacity-40"
-          title="导出 PDF"
+          title={t('toolbar.exportPdf')}
         >
           {exporting ? <Loader2 size={14} className="animate-spin" /> : <Download size={14} />}
-          <span className="hidden sm:inline">{exporting ? '生成中...' : '导出 PDF'}</span>
+          <span className="hidden sm:inline">{exporting ? t('toolbar.exporting') : t('toolbar.exportPdf')}</span>
         </button>
       </div>
     </header>
