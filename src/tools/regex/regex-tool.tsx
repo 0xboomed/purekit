@@ -1,4 +1,7 @@
 import { useState, useMemo } from 'react'
+import { ToolPageSplit } from '@/components/shared/tool-page-split'
+import { ToolCard } from '@/components/shared/tool-card'
+import { ToolInput } from '@/components/shared/tool-input'
 import { useT } from '@/i18n/context'
 
 const PRESETS: Array<{ name: string; pattern: string; flags: string; test: string }> = [
@@ -47,96 +50,100 @@ export default function RegexTool() {
   }, [pattern, flags, testStr])
 
   return (
-    <div className="flex h-full flex-col gap-3 p-4">
-      <div className="flex gap-2">
-        <div className="flex flex-1 items-center gap-1 rounded-lg border border-border bg-white px-3 py-2 dark:border-border-dark dark:bg-gray-900">
-          <span className="text-sm text-gray-400">/</span>
-          <input
-            value={pattern}
-            onChange={(e) => setPattern(e.target.value)}
-            placeholder={t('regex.inputPlaceholder')}
-            spellCheck={false}
-            className="flex-1 bg-transparent font-mono text-sm text-gray-700 outline-none dark:text-gray-200"
-          />
-          <span className="text-sm text-gray-400">/</span>
-          <input
-            value={flags}
-            onChange={(e) => setFlags(e.target.value)}
-            placeholder="gi"
-            spellCheck={false}
-            className="w-8 bg-transparent font-mono text-sm text-brand outline-none"
-          />
-        </div>
-      </div>
+    <ToolPageSplit
+      settings={
+        <ToolCard title="Pattern">
+          <div className="flex items-center gap-1 rounded-lg border border-border bg-white px-3 py-2.5 dark:border-border-dark dark:bg-gray-900">
+            <span className="text-sm text-gray-400">/</span>
+            <input
+              value={pattern}
+              onChange={(e) => setPattern(e.target.value)}
+              placeholder={t('regex.inputPlaceholder')}
+              spellCheck={false}
+              className="flex-1 bg-transparent font-mono text-sm text-gray-700 outline-none dark:text-gray-200"
+            />
+            <span className="text-sm text-gray-400">/</span>
+            <input
+              value={flags}
+              onChange={(e) => setFlags(e.target.value)}
+              placeholder="gi"
+              spellCheck={false}
+              className="w-8 bg-transparent font-mono text-sm text-brand outline-none"
+            />
+          </div>
 
-      <div className="flex flex-wrap gap-1.5">
-        {PRESETS.map((p) => (
-          <button
-            key={p.name}
-            onClick={() => { setPattern(p.pattern); setFlags(p.flags); setTestStr(p.test) }}
-            className="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs text-gray-500 transition-colors hover:bg-brand/10 hover:text-brand dark:bg-gray-800 dark:text-gray-400 dark:hover:text-brand"
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {PRESETS.map((p) => (
+              <button
+                key={p.name}
+                onClick={() => { setPattern(p.pattern); setFlags(p.flags); setTestStr(p.test) }}
+                className="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs text-gray-500 transition-colors hover:bg-brand/10 hover:text-brand dark:bg-gray-800 dark:text-gray-400 dark:hover:text-brand"
+              >
+                {PRESET_NAMES[p.name] ? t(PRESET_NAMES[p.name]!) : p.name}
+              </button>
+            ))}
+          </div>
+
+          {result.error && (
+            <div className="mt-3 rounded-lg bg-red-50 px-4 py-2.5 text-sm text-red-600 dark:bg-red-900/20 dark:text-red-400">
+              {result.error}
+            </div>
+          )}
+        </ToolCard>
+      }
+      output={
+        <div className="flex flex-col gap-4">
+          <ToolCard title={t('regex.testText')}>
+            <ToolInput value={testStr} onChange={setTestStr} placeholder={t('regex.testPlaceholder')} />
+          </ToolCard>
+
+          <ToolCard
+            title={t('regex.matches')}
+            titleAction={
+              <span className="rounded-full bg-brand/10 px-2 py-0.5 text-xs font-medium text-brand">
+                {result.matches.length}{t('regex.matchCount')}
+              </span>
+            }
           >
-            {PRESET_NAMES[p.name] ? t(PRESET_NAMES[p.name]!) : p.name}
-          </button>
-        ))}
-      </div>
+            <div
+              className="min-h-[80px] overflow-auto rounded-lg border border-border bg-gray-50 p-3 font-mono text-sm whitespace-pre-wrap break-all dark:border-border-dark dark:bg-gray-900/50 dark:text-gray-200"
+              dangerouslySetInnerHTML={{ __html: result.highlighted }}
+            />
+          </ToolCard>
 
-      {result.error && (
-        <div className="rounded-lg bg-red-50 px-3 py-2 text-xs text-red-600 dark:bg-red-900/20 dark:text-red-400">
-          {result.error}
+          {result.matches.length > 0 && (
+            <ToolCard>
+              <div className="max-h-[200px] overflow-auto">
+                <table className="w-full text-xs">
+                  <thead>
+                    <tr className="text-left text-gray-400">
+                      <th className="pb-1 pr-3 font-medium">#</th>
+                      <th className="pb-1 pr-3 font-medium">{t('regex.match')}</th>
+                      <th className="pb-1 pr-3 font-medium">{t('regex.position')}</th>
+                      <th className="pb-1 font-medium">{t('regex.groups')}</th>
+                    </tr>
+                  </thead>
+                  <tbody className="font-mono">
+                    {result.matches.map((m, i) => (
+                      <tr key={i} className="border-t border-gray-100 dark:border-gray-800">
+                        <td className="py-1 pr-3 text-gray-400">{i + 1}</td>
+                        <td className="py-1 pr-3 text-brand">{m.text}</td>
+                        <td className="py-1 pr-3 text-gray-500">{m.index}</td>
+                        <td className="py-1 text-gray-600 dark:text-gray-400">
+                          {m.groups.length > 0 ? m.groups.map((g, gi) => (
+                            <span key={gi}>{gi > 0 && ', '}{g || t('regex.empty')}</span>
+                          )) : '-'}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </ToolCard>
+          )}
         </div>
-      )}
-
-      <label className="text-xs font-medium text-gray-500">{t('regex.testText')}</label>
-      <textarea
-        value={testStr}
-        onChange={(e) => setTestStr(e.target.value)}
-        placeholder={t('regex.testPlaceholder')}
-        spellCheck={false}
-        className="min-h-[120px] flex-1 rounded-lg border border-border bg-white p-3 font-mono text-sm text-gray-700 outline-none transition-colors focus:border-brand dark:border-border-dark dark:bg-gray-900 dark:text-gray-200"
-      />
-
-      <div className="flex items-center gap-2">
-        <span className="text-xs font-medium text-gray-500">{t('regex.matches')}</span>
-        <span className="rounded-full bg-brand/10 px-2 py-0.5 text-xs font-medium text-brand">
-          {result.matches.length}{t('regex.matchCount')}
-        </span>
-      </div>
-
-      <div
-        className="min-h-[80px] flex-1 overflow-auto rounded-lg border border-border bg-gray-50 p-3 font-mono text-sm whitespace-pre-wrap break-all dark:border-border-dark dark:bg-gray-900/50 dark:text-gray-200"
-        dangerouslySetInnerHTML={{ __html: result.highlighted }}
-      />
-
-      {result.matches.length > 0 && (
-        <div className="max-h-[150px] overflow-auto rounded-lg border border-border bg-gray-50 p-3 dark:border-border-dark dark:bg-gray-900/50">
-          <table className="w-full text-xs">
-            <thead>
-              <tr className="text-left text-gray-400">
-                <th className="pb-1 pr-3 font-medium">#</th>
-                <th className="pb-1 pr-3 font-medium">{t('regex.match')}</th>
-                <th className="pb-1 pr-3 font-medium">{t('regex.position')}</th>
-                <th className="pb-1 font-medium">{t('regex.groups')}</th>
-              </tr>
-            </thead>
-            <tbody className="font-mono">
-              {result.matches.map((m, i) => (
-                <tr key={i} className="border-t border-gray-100 dark:border-gray-800">
-                  <td className="py-1 pr-3 text-gray-400">{i + 1}</td>
-                  <td className="py-1 pr-3 text-brand">{m.text}</td>
-                  <td className="py-1 pr-3 text-gray-500">{m.index}</td>
-                  <td className="py-1 text-gray-600 dark:text-gray-400">
-                    {m.groups.length > 0 ? m.groups.map((g, gi) => (
-                      <span key={gi}>{gi > 0 && ', '}{g || t('regex.empty')}</span>
-                    )) : '-'}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </div>
+      }
+    />
   )
 }
 

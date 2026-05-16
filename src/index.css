@@ -9,6 +9,8 @@
   --color-border-dark: #27272A;
   --color-bg-secondary: #F9FAFB;
   --color-bg-secondary-dark: #1A1A1E;
+  --color-card: #FFFFFF;
+  --color-card-dark: #18181B;
 }
 
 /* ── Custom thin scrollbars ── */

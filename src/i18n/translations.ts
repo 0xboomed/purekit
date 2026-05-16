@@ -177,6 +177,27 @@ export const translations: Record<string, TranslationMap> = {
     'pdf.savePdf': '保存 PDF',
     'pdf.rendering': '正在渲染预览...',
 
+    // UUID tool
+    'uuid.generate': '生成',
+    'uuid.version': '版本',
+    'uuid.count': '数量',
+    'uuid.uppercase': '大写',
+    'uuid.noHyphens': '无连字符',
+    'uuid.braces': '花括号',
+    'uuid.descv1': '基于时间戳，有序但可能暴露生成时间',
+    'uuid.descv4': '纯随机，最广泛使用的版本',
+    'uuid.descv7': '毫秒时间戳 + 随机，有序且适合数据库索引',
+
+    // API Key tool
+    'apikey.generate': '生成',
+    'apikey.prefix': '前缀',
+    'apikey.length': '长度',
+    'apikey.charset': '字符集',
+    'apikey.count': '数量',
+    'apikey.charsetHex': 'Hex (0-9a-f)',
+    'apikey.charsetBase62': 'Base62 (0-9a-zA-Z)',
+    'apikey.charsetAlnum': '字母+数字 (a-zA-Z0-9)',
+
     // SEO
     'seo.title': '在线工具',
     'seo.defaultTitle': '开发者工具箱',
@@ -357,6 +378,27 @@ export const translations: Record<string, TranslationMap> = {
     'pdf.preview': 'PDF Preview',
     'pdf.savePdf': 'Save PDF',
     'pdf.rendering': 'Rendering preview...',
+
+    // UUID tool
+    'uuid.generate': 'Generate',
+    'uuid.version': 'Version',
+    'uuid.count': 'Count',
+    'uuid.uppercase': 'Uppercase',
+    'uuid.noHyphens': 'No Hyphens',
+    'uuid.braces': 'Braces',
+    'uuid.descv1': 'Timestamp-based, ordered but may leak generation time',
+    'uuid.descv4': 'Fully random, the most widely used version',
+    'uuid.descv7': 'Unix ms timestamp + random, ordered and index-friendly',
+
+    // API Key tool
+    'apikey.generate': 'Generate',
+    'apikey.prefix': 'Prefix',
+    'apikey.length': 'Length',
+    'apikey.charset': 'Charset',
+    'apikey.count': 'Count',
+    'apikey.charsetHex': 'Hex (0-9a-f)',
+    'apikey.charsetBase62': 'Base62 (0-9a-zA-Z)',
+    'apikey.charsetAlnum': 'Alphanumeric (a-zA-Z0-9)',
 
     // SEO
     'seo.title': 'Online Tool',

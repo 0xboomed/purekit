@@ -1,6 +1,12 @@
 import { useState, useCallback } from 'react'
+import { ToolPageDual } from '@/components/shared/tool-page-dual'
+import { ToolCard } from '@/components/shared/tool-card'
+import { ToolInput } from '@/components/shared/tool-input'
+import { ToolFileDrop } from '@/components/shared/tool-file-drop'
+import { ToolSegmentedControl } from '@/components/shared/tool-segmented-control'
 import { CopyButton } from '@/components/shared/copy-button'
 import { useT } from '@/i18n/context'
+import { Loader2 } from 'lucide-react'
 
 type Algo = 'SHA-1' | 'SHA-256' | 'SHA-384' | 'SHA-512'
 
@@ -69,92 +75,68 @@ export default function HashTool() {
   }, [])
 
   return (
-    <div className="flex h-full flex-col gap-3 p-4">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <label className="text-xs font-medium text-gray-500">{t('common.input')}</label>
-          <div className="flex rounded-md bg-gray-100 p-0.5 dark:bg-gray-800">
-            <button
-              onClick={() => { setMode('text'); setInput(''); setResults({}) }}
-              className={`rounded px-2 py-0.5 text-xs transition-colors ${mode === 'text' ? 'bg-white text-gray-700 shadow-sm dark:bg-gray-700 dark:text-gray-200' : 'text-gray-400'}`}
-            >
-              {t('common.text')}
-            </button>
-            <button
-              onClick={() => { setMode('file'); setInput(''); setResults({}) }}
-              className={`rounded px-2 py-0.5 text-xs transition-colors ${mode === 'file' ? 'bg-white text-gray-700 shadow-sm dark:bg-gray-700 dark:text-gray-200' : 'text-gray-400'}`}
-            >
-              {t('common.file')}
-            </button>
-          </div>
-        </div>
-        <button
-          onClick={() => { setInput(''); setResults({}); setError('') }}
-          className="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-        >
-          {t('common.clear')}
-        </button>
-      </div>
-
-      {mode === 'text' ? (
-        <textarea
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder={t('hash.inputPlaceholder')}
-          spellCheck={false}
-          className="min-h-[140px] flex-1 rounded-lg border border-border bg-white p-3 font-mono text-sm text-gray-700 outline-none transition-colors focus:border-brand dark:border-border-dark dark:bg-gray-900 dark:text-gray-200"
-        />
-      ) : (
-        <div
-          onClick={() => document.getElementById('hash-file')?.click()}
-          className="flex min-h-[120px] flex-1 cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-300 text-sm text-gray-400 transition-colors hover:border-brand hover:text-brand dark:border-gray-600"
-        >
-          {input || t('common.clickToSelect')}
-          <input
-            id="hash-file"
-            type="file"
-            className="hidden"
-            onChange={(e) => {
-              const file = e.target.files?.[0]
-              if (file) computeSingleFile(file)
-            }}
-          />
-        </div>
-      )}
-
-      <button
-        onClick={compute}
-        disabled={computing}
-        className="w-full rounded-md bg-brand py-2 text-sm font-medium text-white hover:bg-brand-light disabled:opacity-40"
-      >
-        {computing ? t('hash.computing') : t('hash.compute')}
-      </button>
-
-      {error && (
-        <div className="rounded-lg bg-red-50 px-3 py-2 text-xs text-red-600 dark:bg-red-900/20 dark:text-red-400">
-          {error}
-        </div>
-      )}
-
-      {Object.keys(results).length > 0 && (
-        <div className="flex-1 space-y-2 overflow-auto">
-          {ALGOS.map((algo) => (
-            <div
-              key={algo}
-              className="flex items-start justify-between gap-2 rounded-lg border border-border bg-gray-50 px-3 py-2 dark:border-border-dark dark:bg-gray-900/50"
-            >
-              <div className="min-w-0 flex-1">
-                <div className="mb-0.5 text-xs font-medium text-gray-400">{algo}</div>
-                <code className="break-all font-mono text-xs text-gray-700 dark:text-gray-300">
-                  {results[algo]}
-                </code>
+    <ToolPageDual
+      left={
+        <>
+          <ToolCard
+            title={t('common.input')}
+            titleAction={
+              <div className="flex items-center gap-2">
+                <ToolSegmentedControl
+                  options={[{ value: 'text', label: t('common.text') }, { value: 'file', label: t('common.file') }]}
+                  value={mode}
+                  onChange={(v) => { setMode(v); setInput(''); setResults({}) }}
+                />
+                <button onClick={() => { setInput(''); setResults({}); setError('') }} className="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                  {t('common.clear')}
+                </button>
               </div>
-              <CopyButton text={results[algo] ?? ''} />
+            }
+          >
+            {mode === 'text' ? (
+              <ToolInput value={input} onChange={setInput} placeholder={t('hash.inputPlaceholder')} />
+            ) : (
+              <ToolFileDrop label={input || t('common.clickToSelect')} onFile={computeSingleFile} />
+            )}
+          </ToolCard>
+
+          <button
+            onClick={compute}
+            disabled={computing}
+            className="w-full rounded-lg bg-brand py-2.5 text-sm font-medium text-white hover:bg-brand-light disabled:opacity-40"
+          >
+            {computing ? <><Loader2 size={14} className="mr-1 inline animate-spin" />{t('hash.computing')}</> : t('hash.compute')}
+          </button>
+
+          {error && (
+            <div className="rounded-lg bg-red-50 px-4 py-2.5 text-sm text-red-600 dark:bg-red-900/20 dark:text-red-400">
+              {error}
             </div>
-          ))}
-        </div>
-      )}
-    </div>
+          )}
+        </>
+      }
+      right={
+        <ToolCard title={t('common.output')} className="flex-1">
+          {Object.keys(results).length > 0 ? (
+            <div className="space-y-2">
+              {ALGOS.map((algo) => (
+                <div key={algo} className="flex items-start justify-between gap-2 rounded-lg border border-border bg-gray-50 px-3 py-2 dark:border-border-dark dark:bg-gray-900/50">
+                  <div className="min-w-0 flex-1">
+                    <div className="mb-0.5 text-xs font-medium text-gray-400">{algo}</div>
+                    <code className="break-all font-mono text-xs text-gray-700 dark:text-gray-300">{results[algo]}</code>
+                  </div>
+                  <CopyButton text={results[algo] ?? ''} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="py-8 text-center text-sm text-gray-400">
+              {t('hash.inputPlaceholder')}
+            </div>
+          )}
+        </ToolCard>
+      }
+    />
   )
 }
 

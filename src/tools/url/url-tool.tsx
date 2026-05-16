@@ -1,4 +1,9 @@
 import { useState, useCallback } from 'react'
+import { ToolPageDual } from '@/components/shared/tool-page-dual'
+import { ToolCard } from '@/components/shared/tool-card'
+import { ToolInput } from '@/components/shared/tool-input'
+import { ToolOutput } from '@/components/shared/tool-output'
+import { ToolActionBar } from '@/components/shared/tool-action-bar'
 import { CopyButton } from '@/components/shared/copy-button'
 import { useT } from '@/i18n/context'
 
@@ -68,70 +73,62 @@ export default function UrlTool() {
   }, [input])
 
   return (
-    <div className="flex h-full flex-col gap-3 p-4">
-      <div className="flex items-center justify-between">
-        <label className="text-xs font-medium text-gray-500">{t('common.input')}</label>
-        <button
-          onClick={() => { setInput(''); setOutput(''); setError(''); setParams([]) }}
-          className="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-        >
-          {t('common.clear')}
-        </button>
-      </div>
-      <textarea
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder={t('url.inputPlaceholder')}
-        spellCheck={false}
-        className="min-h-[140px] flex-1 rounded-lg border border-border bg-white p-3 font-mono text-sm text-gray-700 outline-none transition-colors focus:border-brand dark:border-border-dark dark:bg-gray-900 dark:text-gray-200"
-      />
+    <ToolPageDual
+      left={
+        <>
+          <ToolCard
+            title={t('common.input')}
+            titleAction={
+              <button onClick={() => { setInput(''); setOutput(''); setError(''); setParams([]) }} className="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                {t('common.clear')}
+              </button>
+            }
+          >
+            <ToolInput value={input} onChange={setInput} placeholder={t('url.inputPlaceholder')} />
+          </ToolCard>
 
-      <div className="flex items-center gap-2">
-        <button onClick={encode} className="rounded-md bg-brand px-3 py-1.5 text-xs font-medium text-white hover:bg-brand-light">
-          {t('url.encode')}
-        </button>
-        <button onClick={decode} className="rounded-md bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
-          {t('url.decode')}
-        </button>
-        <button onClick={parseParams} className="rounded-md bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
-          {t('url.parseParams')}
-        </button>
-        <button onClick={buildQuery} className="rounded-md bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">
-          {t('url.jsonToQuery')}
-        </button>
-      </div>
+          <ToolActionBar className="flex-wrap">
+            <button onClick={encode} className="rounded-lg bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-light">
+              {t('url.encode')}
+            </button>
+            <button onClick={decode} className="rounded-lg border border-border bg-white px-4 py-2 text-sm font-medium text-gray-600 hover:bg-bg-secondary dark:border-border-dark dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800">
+              {t('url.decode')}
+            </button>
+            <button onClick={parseParams} className="rounded-lg border border-border bg-white px-4 py-2 text-sm font-medium text-gray-600 hover:bg-bg-secondary dark:border-border-dark dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800">
+              {t('url.parseParams')}
+            </button>
+            <button onClick={buildQuery} className="rounded-lg border border-border bg-white px-4 py-2 text-sm font-medium text-gray-600 hover:bg-bg-secondary dark:border-border-dark dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800">
+              {t('url.jsonToQuery')}
+            </button>
+          </ToolActionBar>
 
-      {error && (
-        <div className="rounded-lg bg-red-50 px-3 py-2 text-xs text-red-600 dark:bg-red-900/20 dark:text-red-400">
-          {error}
-        </div>
-      )}
-
-      {params.length > 0 && (
-        <div className="rounded-lg border border-border bg-gray-50 p-3 dark:border-border-dark dark:bg-gray-900/50">
-          <div className="mb-2 text-xs font-medium text-gray-500">{t('url.paramsList')}</div>
-          <div className="space-y-1">
-            {params.map((p, i) => (
-              <div key={i} className="flex items-center gap-2 font-mono text-xs">
-                <span className="text-brand">{p.key}</span>
-                <span className="text-gray-400">=</span>
-                <span className="text-gray-700 dark:text-gray-300">{p.value}</span>
+          {error && (
+            <div className="rounded-lg bg-red-50 px-4 py-2.5 text-sm text-red-600 dark:bg-red-900/20 dark:text-red-400">
+              {error}
+            </div>
+          )}
+        </>
+      }
+      right={
+        <div className="flex flex-col gap-4">
+          {params.length > 0 && (
+            <ToolCard title={t('url.paramsList')}>
+              <div className="space-y-1">
+                {params.map((p, i) => (
+                  <div key={i} className="flex items-center gap-2 font-mono text-xs">
+                    <span className="text-brand">{p.key}</span>
+                    <span className="text-gray-400">=</span>
+                    <span className="text-gray-700 dark:text-gray-300">{p.value}</span>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </ToolCard>
+          )}
+          <ToolCard title={t('common.output')} titleAction={<CopyButton text={output} />} className="flex-1">
+            <ToolOutput value={output} placeholder={t('json.outputPlaceholder')} className="min-h-0 flex-1" />
+          </ToolCard>
         </div>
-      )}
-
-      <div className="flex items-center justify-between">
-        <label className="text-xs font-medium text-gray-500">{t('common.output')}</label>
-        <CopyButton text={output} />
-      </div>
-      <textarea
-        value={output}
-        readOnly
-        placeholder={t('json.outputPlaceholder')}
-        className="min-h-[140px] flex-1 rounded-lg border border-border bg-gray-50 p-3 font-mono text-sm text-gray-700 dark:border-border-dark dark:bg-gray-900/50 dark:text-gray-200"
-      />
-    </div>
+      }
+    />
   )
 }

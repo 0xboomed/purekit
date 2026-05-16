@@ -36,18 +36,23 @@ export function ToolLayout({ title, titleEn, description, descriptionEn, icon: I
 
   return (
     <div className="flex h-screen flex-col bg-white text-gray-900 dark:bg-surface-dark dark:text-gray-100">
-      <header className="flex h-10 shrink-0 items-center gap-2 border-b border-border bg-surface px-3 dark:border-border-dark dark:bg-surface-dark">
+      <header className="flex h-14 shrink-0 items-center gap-2 border-b border-border bg-surface px-4 dark:border-border-dark dark:bg-surface-dark">
         <button
           onClick={() => navigate('/')}
-          className="rounded-md p-1 text-gray-400 transition-colors hover:bg-bg-secondary hover:text-gray-600 dark:text-gray-500 dark:hover:bg-bg-secondary-dark dark:hover:text-gray-300"
+          className="rounded-md p-1.5 text-gray-400 transition-colors hover:bg-bg-secondary hover:text-gray-600 dark:text-gray-500 dark:hover:bg-bg-secondary-dark dark:hover:text-gray-300"
           title={t('common.back')}
         >
           <ArrowLeft size={16} />
         </button>
-        <Icon size={18} className="text-brand" />
+        <Icon size={20} className="text-brand" />
         <span className="text-sm font-semibold tracking-tight text-gray-800 dark:text-gray-200">
           {displayName}
         </span>
+        {(description || descriptionEn) && (
+          <span className="ml-2 hidden truncate text-xs text-gray-400 sm:inline dark:text-gray-500">
+            {locale === 'en' ? descriptionEn : description}
+          </span>
+        )}
         <button
           onClick={() => setLocale(locale === 'zh' ? 'en' : 'zh')}
           className="ml-auto flex items-center gap-1 rounded-md px-2 py-1 text-xs text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
