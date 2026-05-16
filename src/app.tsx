@@ -4,6 +4,7 @@ import { StatusBar } from '@/components/status-bar/status-bar'
 import { EditorPane } from '@/components/editor-pane/editor-pane'
 import { PreviewPane } from '@/components/preview-pane/preview-pane'
 import { DropZone } from '@/components/file-upload/drop-zone'
+import { PdfSettingsPanel } from '@/components/pdf-export/pdf-settings-panel'
 import { PenLine } from 'lucide-react'
 
 export function App() {
@@ -51,6 +52,8 @@ export function App() {
 
         <StatusBar />
       </div>
+
+      <PdfSettingsPanel />
     </div>
   )
 }
