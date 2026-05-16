@@ -12,6 +12,22 @@ const CHARSETS = {
 
 const CHARSET_KEYS = Object.keys(CHARSETS) as Array<keyof typeof CHARSETS>
 
+interface Preset {
+  name: string
+  nameEn: string
+  prefix: string
+  length: number
+  charset: keyof typeof CHARSETS
+}
+
+const PRESETS: Preset[] = [
+  { name: 'Stripe', nameEn: 'Stripe', prefix: 'sk_live_', length: 24, charset: 'base62' },
+  { name: 'OpenAI', nameEn: 'OpenAI', prefix: 'sk-', length: 48, charset: 'base62' },
+  { name: 'GitHub', nameEn: 'GitHub', prefix: 'ghp_', length: 36, charset: 'base62' },
+  { name: 'AWS', nameEn: 'AWS', prefix: 'AKIA', length: 16, charset: 'alnum' },
+  { name: '通用', nameEn: 'Generic', prefix: 'sk_', length: 32, charset: 'base62' },
+]
+
 export default function ApikeyTool() {
   const { t } = useT()
   const [prefix, setPrefix] = useState('sk_')
@@ -19,6 +35,16 @@ export default function ApikeyTool() {
   const [charset, setCharset] = useState<keyof typeof CHARSETS>('base62')
   const [count, setCount] = useState(3)
   const [keys, setKeys] = useState<string[]>([])
+
+  const entropy = CHARSETS[charset].length > 0
+    ? Math.floor(length * Math.log2(CHARSETS[charset].length))
+    : 0
+
+  const applyPreset = useCallback((preset: Preset) => {
+    setPrefix(preset.prefix)
+    setLength(preset.length)
+    setCharset(preset.charset)
+  }, [])
 
   const generate = useCallback(() => {
     const pool = CHARSETS[charset]
@@ -39,6 +65,21 @@ export default function ApikeyTool() {
       settings={
         <ToolCard title={t('apikey.generate')}>
           <div className="space-y-4">
+            <div>
+              <label className="mb-1.5 block text-xs font-medium text-gray-500">{t('apikey.presets')}</label>
+              <div className="flex flex-wrap gap-1.5">
+                {PRESETS.map((p) => (
+                  <button
+                    key={p.nameEn}
+                    onClick={() => applyPreset(p)}
+                    className="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs text-gray-500 transition-colors hover:bg-brand/10 hover:text-brand dark:bg-gray-800 dark:text-gray-400 dark:hover:text-brand"
+                  >
+                    {p.nameEn}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <div>
               <label className="mb-1 block text-xs font-medium text-gray-500">{t('apikey.prefix')}</label>
               <input
@@ -95,15 +136,23 @@ export default function ApikeyTool() {
             </div>
 
             <div className="flex items-center justify-between">
-              <label className="text-xs font-medium text-gray-500">{t('apikey.count')}</label>
-              <input
-                type="number"
-                min={1}
-                max={20}
-                value={count}
-                onChange={(e) => setCount(Math.max(1, Math.min(20, Number(e.target.value))))}
-                className="w-16 rounded-lg border border-border bg-white px-2 py-1 text-xs text-gray-700 outline-none dark:border-border-dark dark:bg-gray-900 dark:text-gray-200"
-              />
+              <div className="flex items-center gap-2">
+                <label className="text-xs font-medium text-gray-500">{t('apikey.count')}</label>
+                <input
+                  type="number"
+                  min={1}
+                  max={20}
+                  value={count}
+                  onChange={(e) => setCount(Math.max(1, Math.min(20, Number(e.target.value))))}
+                  className="w-16 rounded-lg border border-border bg-white px-2 py-1 text-xs text-gray-700 outline-none dark:border-border-dark dark:bg-gray-900 dark:text-gray-200"
+                />
+              </div>
+              <div className="flex items-center gap-1.5 text-xs">
+                <span className="text-gray-400">{t('apikey.entropy')}</span>
+                <span className={`font-mono font-medium ${entropy >= 128 ? 'text-emerald-500' : entropy >= 64 ? 'text-yellow-500' : 'text-red-500'}`}>
+                  {entropy} {t('apikey.bits')}
+                </span>
+              </div>
             </div>
           </div>
 
