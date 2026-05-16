@@ -1,0 +1,168 @@
+.preview-pane {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
+    "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #1a1a1a;
+}
+
+.preview-pane h1 {
+  font-size: 2em;
+  font-weight: 700;
+  border-bottom: 1px solid #d0d7de;
+  padding-bottom: 0.3em;
+  margin: 0.67em 0;
+}
+
+.preview-pane h2 {
+  font-size: 1.5em;
+  font-weight: 600;
+  border-bottom: 1px solid #d0d7de;
+  padding-bottom: 0.3em;
+  margin: 1em 0 0.67em;
+}
+
+.preview-pane h3 {
+  font-size: 1.25em;
+  font-weight: 600;
+  margin: 1em 0 0.5em;
+}
+
+.preview-pane h4,
+.preview-pane h5,
+.preview-pane h6 {
+  font-weight: 600;
+  margin: 1em 0 0.5em;
+}
+
+.preview-pane p {
+  margin: 0.5em 0;
+}
+
+.preview-pane ul,
+.preview-pane ol {
+  padding-left: 2em;
+  margin: 0.5em 0;
+}
+
+.preview-pane li {
+  margin: 0.25em 0;
+}
+
+.preview-pane li > ul,
+.preview-pane li > ol {
+  margin: 0;
+}
+
+.preview-pane blockquote {
+  border-left: 4px solid #d0d7de;
+  padding: 0.5em 1em;
+  margin: 0.5em 0;
+  color: #656d76;
+  background: #f6f8fa;
+}
+
+.preview-pane code {
+  font-family: "JetBrains Mono", "Fira Code", "Consolas", monospace;
+  font-size: 0.875em;
+  background: #eff1f3;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+}
+
+.preview-pane pre {
+  background: #f6f8fa;
+  border-radius: 6px;
+  padding: 1em;
+  overflow-x: auto;
+  margin: 0.75em 0;
+}
+
+.preview-pane pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+
+.preview-pane table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0.75em 0;
+}
+
+.preview-pane th,
+.preview-pane td {
+  border: 1px solid #d0d7de;
+  padding: 6px 13px;
+}
+
+.preview-pane th {
+  background: #f6f8fa;
+  font-weight: 600;
+}
+
+.preview-pane tr:nth-child(even) {
+  background: #f6f8fa;
+}
+
+.preview-pane hr {
+  border: none;
+  border-top: 1px solid #d0d7de;
+  margin: 1.5em 0;
+}
+
+.preview-pane img {
+  border-radius: 4px;
+}
+
+.preview-pane input[type="checkbox"] {
+  margin-right: 0.5em;
+}
+
+/* Task list styling */
+.preview-pane ul:has(input[type="checkbox"]) {
+  list-style: none;
+  padding-left: 0.5em;
+}
+
+/* Dark mode overrides */
+:is(.dark) .preview-pane {
+  color: #e6edf3;
+}
+
+:is(.dark) .preview-pane h1,
+:is(.dark) .preview-pane h2 {
+  border-color: #30363d;
+}
+
+:is(.dark) .preview-pane blockquote {
+  border-color: #30363d;
+  color: #8b949e;
+  background: #161b22;
+}
+
+:is(.dark) .preview-pane code {
+  background: #1c2128;
+}
+
+:is(.dark) .preview-pane pre {
+  background: #161b22;
+}
+
+:is(.dark) .preview-pane th,
+:is(.dark) .preview-pane td {
+  border-color: #30363d;
+}
+
+:is(.dark) .preview-pane th {
+  background: #161b22;
+}
+
+:is(.dark) .preview-pane tr:nth-child(even) {
+  background: #161b22;
+}
+
+:is(.dark) .preview-pane hr {
+  border-color: #30363d;
+}
