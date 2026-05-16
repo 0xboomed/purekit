@@ -7,4 +7,61 @@
   --color-surface-dark: #111113;
   --color-border: #E5E7EB;
   --color-border-dark: #27272A;
+  --color-bg-secondary: #F9FAFB;
+  --color-bg-secondary-dark: #1A1A1E;
+}
+
+/* ── Custom thin scrollbars ── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(155, 155, 155, 0.35) transparent;
+}
+
+:is(.dark) * {
+  scrollbar-color: rgba(120, 120, 140, 0.35) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(155, 155, 155, 0.35);
+  border-radius: 3px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(155, 155, 155, 0.6);
+}
+
+:is(.dark) *::-webkit-scrollbar-thumb {
+  background: rgba(120, 120, 140, 0.35);
+}
+
+:is(.dark) *::-webkit-scrollbar-thumb:hover {
+  background: rgba(120, 120, 140, 0.6);
+}
+
+/* ── CodeMirror overrides ── */
+.cm-editor {
+  font-size: 14px;
+}
+
+.cm-editor .cm-scroller {
+  font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", "Consolas", monospace;
+}
+
+.cm-editor .cm-gutters {
+  border-right: none !important;
+  background: transparent !important;
+}
+
+.cm-editor .cm-foldGutter {
+  width: 0 !important;
+  padding: 0 !important;
 }

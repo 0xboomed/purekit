@@ -41,7 +41,7 @@ export function App() {
           {viewMode === 'preview' && (
             <button
               onClick={() => setViewMode('editor')}
-              className="fixed bottom-14 right-4 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-brand text-white shadow-lg hover:bg-brand-light md:hidden"
+              className="fixed bottom-14 right-4 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-brand text-white shadow-lg transition-transform hover:scale-105 hover:bg-brand-light md:hidden"
               title="编辑"
             >
               <PenLine size={20} />

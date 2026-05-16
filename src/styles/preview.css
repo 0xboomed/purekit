@@ -2,8 +2,9 @@
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
     "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 15px;
-  line-height: 1.7;
+  line-height: 1.8;
   color: #1a1a1a;
+  background: #ffffff;
 }
 
 .preview-pane h1 {
@@ -120,34 +121,45 @@
   margin-right: 0.5em;
 }
 
-/* Task list styling */
 .preview-pane ul:has(input[type="checkbox"]) {
   list-style: none;
   padding-left: 0.5em;
 }
 
-/* Dark mode overrides */
+/* ── Dark mode ── */
+
 :is(.dark) .preview-pane {
-  color: #e6edf3;
+  color: #d1d5db;
+  background: #111113;
 }
 
 :is(.dark) .preview-pane h1,
-:is(.dark) .preview-pane h2 {
+:is(.dark) .preview-pane h2,
+:is(.dark) .preview-pane h3,
+:is(.dark) .preview-pane h4,
+:is(.dark) .preview-pane h5,
+:is(.dark) .preview-pane h6 {
+  color: #f0f0f2;
   border-color: #30363d;
 }
 
 :is(.dark) .preview-pane blockquote {
   border-color: #30363d;
   color: #8b949e;
-  background: #161b22;
+  background: #1a1a1e;
 }
 
 :is(.dark) .preview-pane code {
-  background: #1c2128;
+  background: #1e1e22;
+  color: #d1d5db;
 }
 
 :is(.dark) .preview-pane pre {
-  background: #161b22;
+  background: #1a1a1e;
+}
+
+:is(.dark) .preview-pane pre code {
+  color: #d1d5db;
 }
 
 :is(.dark) .preview-pane th,
@@ -156,13 +168,60 @@
 }
 
 :is(.dark) .preview-pane th {
-  background: #161b22;
+  background: #1a1a1e;
+  color: #f0f0f2;
 }
 
 :is(.dark) .preview-pane tr:nth-child(even) {
-  background: #161b22;
+  background: #141416;
 }
 
 :is(.dark) .preview-pane hr {
   border-color: #30363d;
+}
+
+:is(.dark) .preview-pane strong {
+  color: #f0f0f2;
+}
+
+/* Override highlight.js github theme in dark mode */
+:is(.dark) .preview-pane .hljs {
+  background: transparent;
+  color: #d1d5db;
+}
+
+:is(.dark) .preview-pane .hljs-keyword,
+:is(.dark) .preview-pane .hljs-selector-tag,
+:is(.dark) .preview-pane .hljs-built_in {
+  color: #ff7b72;
+}
+
+:is(.dark) .preview-pane .hljs-string,
+:is(.dark) .preview-pane .hljs-attr {
+  color: #a5d6ff;
+}
+
+:is(.dark) .preview-pane .hljs-comment,
+:is(.dark) .preview-pane .hljs-quote {
+  color: #8b949e;
+  font-style: italic;
+}
+
+:is(.dark) .preview-pane .hljs-variable,
+:is(.dark) .preview-pane .hljs-template-variable {
+  color: #ffa657;
+}
+
+:is(.dark) .preview-pane .hljs-number,
+:is(.dark) .preview-pane .hljs-literal {
+  color: #79c0ff;
+}
+
+:is(.dark) .preview-pane .hljs-type,
+:is(.dark) .preview-pane .hljs-function .hljs-title {
+  color: #d2a8ff;
+}
+
+:is(.dark) .preview-pane .hljs-meta {
+  color: #ffa657;
 }

@@ -16,7 +16,7 @@ export function StatusBar() {
   }, [lastSavedAt])
 
   return (
-    <footer className="flex h-6 shrink-0 items-center justify-between border-t border-border bg-surface px-3 text-xs text-gray-500 dark:border-border-dark dark:bg-surface-dark dark:text-gray-400">
+    <footer className="flex h-6 shrink-0 items-center justify-between border-t border-border bg-surface px-3 text-[11px] text-gray-400 dark:border-border-dark dark:bg-surface-dark dark:text-gray-500">
       <div className="flex items-center gap-4">
         <span>
           行 {cursorLine}, 列 {cursorCol}
@@ -27,8 +27,8 @@ export function StatusBar() {
       <div className="flex items-center gap-1">
         {showSaved ? (
           <>
-            <Check size={12} className="text-green-500" />
-            <span className="text-green-500">自动保存</span>
+            <Check size={10} className="text-emerald-500" />
+            <span className="text-emerald-500">自动保存</span>
           </>
         ) : (
           <span>已保存</span>
