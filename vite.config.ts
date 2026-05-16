@@ -55,6 +55,7 @@ export default defineConfig({
     }),
   ],
   resolve: {
+    dedupe: ['react', 'react-dom', 'react-dom/client'],
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
