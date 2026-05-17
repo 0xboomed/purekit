@@ -126,12 +126,76 @@ export const translations: Record<string, TranslationMap> = {
 
     // QRCode tool
     'qrcode.content': '内容',
+    'qrcode.style': '样式',
     'qrcode.size': '尺寸 (px)',
     'qrcode.errorLevel': '容错等级',
     'qrcode.fgColor': '前景色',
+    'qrcode.solid': '纯色',
     'qrcode.bgColor': '背景色',
     'qrcode.download': '下载 PNG',
     'qrcode.inputPlaceholder': '输入文本或 URL...',
+
+    // QRCode dot styles
+    'qrcode.dotStyle': '点样式',
+    'qrcode.dotSquare': '方形',
+    'qrcode.dotRounded': '圆角',
+    'qrcode.dotCircle': '圆形',
+    'qrcode.dotDiamond': '菱形',
+
+    // QRCode export
+    'qrcode.formatPng': 'PNG',
+    'qrcode.formatSvg': 'SVG',
+    'qrcode.copy': '复制图片',
+    'qrcode.copiedImage': '已复制',
+
+    // QRCode error
+    'qrcode.generationError': '生成失败',
+    'qrcode.dataTooLong': '数据过长，请减少内容或降低容错等级',
+
+    // QRCode capacity
+    'qrcode.capacity': '容量',
+
+    // QRCode templates
+    'qrcode.template': '模板',
+    'qrcode.templateText': '文本',
+    'qrcode.templateUrl': 'URL',
+    'qrcode.templateWifi': 'WiFi',
+    'qrcode.templateVcard': '名片',
+    'qrcode.templatePhone': '电话',
+    'qrcode.templateEmail': '邮件',
+
+    // WiFi template
+    'qrcode.wifiSsid': '网络名称 (SSID)',
+    'qrcode.wifiPassword': '密码',
+    'qrcode.wifiEncryption': '加密方式',
+    'qrcode.wifiWpa': 'WPA/WPA2',
+    'qrcode.wifiWep': 'WEP',
+    'qrcode.wifiNone': '无',
+
+    // vCard template
+    'qrcode.vcardName': '姓名',
+    'qrcode.vcardPhone': '电话',
+    'qrcode.vcardEmail': '邮箱',
+    'qrcode.vcardOrg': '公司',
+
+    // Phone template
+    'qrcode.phoneNumber': '电话号码',
+    'qrcode.phonePlaceholder': '+86 138 0000 0000',
+
+    // Email template
+    'qrcode.emailTo': '收件人',
+    'qrcode.emailSubject': '主题',
+    'qrcode.emailBody': '正文',
+
+    // URL template
+    'qrcode.urlPlaceholder': 'example.com',
+
+    // Logo
+    'qrcode.logo': 'Logo',
+    'qrcode.logoUpload': '上传 Logo',
+    'qrcode.logoRemove': '移除',
+    'qrcode.logoAutoLevel': '已自动切换为高容错',
+    'qrcode.logoHint': 'Logo 占用约 20% 面积',
 
     // Markdown tool
     'markdown.edit': '编辑',
@@ -332,12 +396,76 @@ export const translations: Record<string, TranslationMap> = {
 
     // QRCode tool
     'qrcode.content': 'Content',
+    'qrcode.style': 'Style',
     'qrcode.size': 'Size (px)',
     'qrcode.errorLevel': 'Error Correction',
     'qrcode.fgColor': 'Foreground',
+    'qrcode.solid': 'Solid',
     'qrcode.bgColor': 'Background',
     'qrcode.download': 'Download PNG',
     'qrcode.inputPlaceholder': 'Enter text or URL...',
+
+    // QRCode dot styles
+    'qrcode.dotStyle': 'Dot Style',
+    'qrcode.dotSquare': 'Square',
+    'qrcode.dotRounded': 'Rounded',
+    'qrcode.dotCircle': 'Circle',
+    'qrcode.dotDiamond': 'Diamond',
+
+    // QRCode export
+    'qrcode.formatPng': 'PNG',
+    'qrcode.formatSvg': 'SVG',
+    'qrcode.copy': 'Copy Image',
+    'qrcode.copiedImage': 'Copied',
+
+    // QRCode error
+    'qrcode.generationError': 'Generation Failed',
+    'qrcode.dataTooLong': 'Data too long, reduce content or lower error correction',
+
+    // QRCode capacity
+    'qrcode.capacity': 'Capacity',
+
+    // QRCode templates
+    'qrcode.template': 'Template',
+    'qrcode.templateText': 'Text',
+    'qrcode.templateUrl': 'URL',
+    'qrcode.templateWifi': 'WiFi',
+    'qrcode.templateVcard': 'Contact Card',
+    'qrcode.templatePhone': 'Phone',
+    'qrcode.templateEmail': 'Email',
+
+    // WiFi template
+    'qrcode.wifiSsid': 'Network Name (SSID)',
+    'qrcode.wifiPassword': 'Password',
+    'qrcode.wifiEncryption': 'Encryption',
+    'qrcode.wifiWpa': 'WPA/WPA2',
+    'qrcode.wifiWep': 'WEP',
+    'qrcode.wifiNone': 'None',
+
+    // vCard template
+    'qrcode.vcardName': 'Full Name',
+    'qrcode.vcardPhone': 'Phone',
+    'qrcode.vcardEmail': 'Email',
+    'qrcode.vcardOrg': 'Organization',
+
+    // Phone template
+    'qrcode.phoneNumber': 'Phone Number',
+    'qrcode.phonePlaceholder': '+1 234 567 8900',
+
+    // Email template
+    'qrcode.emailTo': 'Recipient',
+    'qrcode.emailSubject': 'Subject',
+    'qrcode.emailBody': 'Body',
+
+    // URL template
+    'qrcode.urlPlaceholder': 'example.com',
+
+    // Logo
+    'qrcode.logo': 'Logo',
+    'qrcode.logoUpload': 'Upload Logo',
+    'qrcode.logoRemove': 'Remove',
+    'qrcode.logoAutoLevel': 'Auto-switched to high error correction',
+    'qrcode.logoHint': 'Logo covers ~20% of QR area',
 
     // Markdown tool
     'markdown.edit': 'Edit',

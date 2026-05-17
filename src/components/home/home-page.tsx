@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, useCallback } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Search, Globe, Moon, Sun } from 'lucide-react'
 import { getToolsByCategory, searchTools, CATEGORIES } from '@/tools/registry'
@@ -47,6 +47,9 @@ const RECOMMENDED: RecommendedCategory[] = [
     nameEn: 'AI Tools',
     tools: [
       { name: 'Claude Code', nameEn: 'Claude Code', url: 'https://docs.anthropic.com/en/docs/claude-code', description: 'Anthropic 的 AI 编程助手 CLI', descriptionEn: 'AI coding assistant CLI by Anthropic' },
+      { name: 'OpenCode', nameEn: 'OpenCode', url: 'https://opencode.ai', description: '开源终端 AI 编程代理', descriptionEn: 'Open-source terminal AI coding agent' },
+      { name: 'Hermes Agent', nameEn: 'Hermes Agent', url: 'https://hermes-agent.nousresearch.com', description: '自我学习的 AI 代理框架', descriptionEn: 'Self-improving AI agent framework' },
+      { name: 'OpenClaw', nameEn: 'OpenClaw', url: 'https://openclaw.ai', description: '开源个人 AI 助手', descriptionEn: 'Open-source personal AI assistant' },
       { name: 'GitHub Copilot', nameEn: 'GitHub Copilot', url: 'https://github.com/features/copilot', description: 'AI 代码补全', descriptionEn: 'AI code completion' },
       { name: 'ChatGPT', nameEn: 'ChatGPT', url: 'https://chat.openai.com', description: 'OpenAI 对话式 AI', descriptionEn: 'Conversational AI by OpenAI' },
     ],
@@ -83,9 +86,8 @@ function ToolFavicon({ url, name }: { url: string; name: string }) {
   const domain = new URL(url).hostname
   const [error, setError] = useState(false)
 
-  const letter = name.charAt(0).toUpperCase()
-
   if (error) {
+    const letter = name.charAt(0).toUpperCase()
     return (
       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-brand/10 text-sm font-bold text-brand dark:bg-brand/15">
         {letter}
@@ -95,9 +97,9 @@ function ToolFavicon({ url, name }: { url: string; name: string }) {
 
   return (
     <img
-      src={`https://www.google.com/s2/favicons?domain=${domain}&sz=32`}
+      src={`/favicons/${domain}.png`}
       alt={name}
-      onError={useCallback(() => setError(true), [])}
+      onError={() => setError(true)}
       className="h-8 w-8 shrink-0 rounded-md object-contain"
     />
   )
