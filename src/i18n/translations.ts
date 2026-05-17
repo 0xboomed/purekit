@@ -20,6 +20,7 @@ export const translations: Record<string, TranslationMap> = {
     // Home
     'home.subtitle': '零安装 · 全离线 · 隐私安全的开发者工具箱',
     'home.search': '搜索工具...',
+    'recommend.title': '精选推荐',
 
     // Categories
     'category.converter': '转换工具',
@@ -225,6 +226,7 @@ export const translations: Record<string, TranslationMap> = {
     // Home
     'home.subtitle': 'Zero-install · Fully offline · Privacy-first developer toolkit',
     'home.search': 'Search tools...',
+    'recommend.title': 'Recommended Tools',
 
     // Categories
     'category.converter': 'Converters',
