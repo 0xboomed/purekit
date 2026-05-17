@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState, useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import { Search, Globe } from 'lucide-react'
+import { Search, Globe, Moon, Sun } from 'lucide-react'
 import { getToolsByCategory, searchTools, CATEGORIES } from '@/tools/registry'
 import type { Category, ToolMeta } from '@/tools/registry'
 import { useT } from '@/i18n/context'
+import { useAppStore } from '@/stores/use-app-store'
 
 interface RecommendedTool {
   name: string
@@ -105,6 +106,8 @@ function ToolFavicon({ url, name }: { url: string; name: string }) {
 export function HomePage() {
   const [query, setQuery] = useState('')
   const { t, locale, setLocale } = useT()
+  const theme = useAppStore((s) => s.theme)
+  const toggleTheme = useAppStore((s) => s.toggleTheme)
 
   useEffect(() => {
     document.title = `DevKit — ${t('seo.defaultTitle')}`
@@ -136,14 +139,22 @@ export function HomePage() {
       <div className="bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-surface-dark dark:to-gray-900">
         <div className="mx-auto max-w-5xl px-4 pt-16 pb-12">
           <div className="relative text-center">
-            {/* Language toggle */}
-            <button
-              onClick={() => setLocale(locale === 'zh' ? 'en' : 'zh')}
-              className="absolute right-0 top-0 flex items-center gap-1 rounded-full border border-border px-3 py-1 text-xs text-gray-500 transition-colors hover:border-brand hover:text-brand dark:border-border-dark dark:text-gray-400 dark:hover:border-brand dark:hover:text-brand"
-            >
-              <Globe size={12} />
-              {locale === 'zh' ? 'En' : '中'}
-            </button>
+            {/* Top-right controls */}
+            <div className="absolute right-0 top-0 flex items-center gap-2">
+              <button
+                onClick={toggleTheme}
+                className="flex items-center justify-center rounded-full border border-border p-1.5 text-gray-500 transition-colors hover:border-brand hover:text-brand dark:border-border-dark dark:text-gray-400 dark:hover:border-brand dark:hover:text-brand"
+              >
+                {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
+              </button>
+              <button
+                onClick={() => setLocale(locale === 'zh' ? 'en' : 'zh')}
+                className="flex items-center gap-1 rounded-full border border-border px-3 py-1 text-xs text-gray-500 transition-colors hover:border-brand hover:text-brand dark:border-border-dark dark:text-gray-400 dark:hover:border-brand dark:hover:text-brand"
+              >
+                <Globe size={12} />
+                {locale === 'zh' ? 'En' : '中'}
+              </button>
+            </div>
 
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-50">
               DevKit
