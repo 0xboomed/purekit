@@ -7,6 +7,35 @@ import rehypeSlug from 'rehype-slug'
 import rehypeStringify from 'rehype-stringify'
 import type { PdfSettings } from '@/types/pdf'
 
+const MERMAID_RE = /<pre[^>]*>\s*<code[^>]*class="[^"]*language-mermaid[^"]*"[^>]*>([\s\S]*?)<\/code>\s*<\/pre>/gi
+
+function decodeHtmlEntities(s: string): string {
+  const el = document.createElement('textarea')
+  el.innerHTML = s.replace(/<[^>]+>/g, '')
+  return el.value.trim()
+}
+
+async function renderMermaidBlocks(html: string): Promise<string> {
+  const matches = [...html.matchAll(MERMAID_RE)]
+  if (matches.length === 0) return html
+
+  const mermaid = (await import('mermaid')).default
+  mermaid.initialize({ startOnLoad: false, theme: 'default', securityLevel: 'strict' })
+
+  let result = html
+  for (let i = 0; i < matches.length; i++) {
+    const m = matches[i]!
+    const code = decodeHtmlEntities(m[1]!)
+    try {
+      const { svg } = await mermaid.render(`pdf_mermaid_${i}`, code)
+      result = result.replace(m[0], `<div class="mermaid-diagram">${svg}</div>`)
+    } catch {
+      result = result.replace(m[0], `<pre class="mermaid-error"><code>${decodeHtmlEntities(m[1]!)}</code></pre>`)
+    }
+  }
+  return result
+}
+
 const PAGE_SIZES = {
   A4: [210, 297] as [number, number],
   A3: [297, 420] as [number, number],
@@ -28,12 +57,13 @@ async function markdownToHtml(markdown: string): Promise<string> {
     .use(remarkParse)
     .use(remarkGfm)
     .use(remarkRehype, { allowDangerousHtml: true })
-    .use(rehypeHighlight)
+    .use(rehypeHighlight, { plainText: ['mermaid'] })
     .use(rehypeSlug)
     .use(rehypeStringify)
 
   const result = await processor.process(markdown)
-  return String(result)
+  const html = String(result)
+  return renderMermaidBlocks(html)
 }
 
 export function generatePreviewHtml(
@@ -177,6 +207,17 @@ tr {
 pre, img, blockquote {
   break-inside: avoid;
   page-break-inside: avoid;
+}
+
+.mermaid-diagram {
+  margin: 0.75em 0;
+  text-align: center;
+  overflow-x: auto;
+}
+
+.mermaid-diagram svg {
+  max-width: 100%;
+  height: auto;
 }
 </style>
 </head>
