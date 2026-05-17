@@ -126,6 +126,60 @@
   padding-left: 0.5em;
 }
 
+/* ── Mermaid diagrams ── */
+
+.mermaid-diagram {
+  margin: 0.75em 0;
+  text-align: center;
+  overflow-x: auto;
+}
+
+.mermaid-diagram svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.mermaid-loading {
+  margin: 0.75em 0;
+  padding: 2em;
+  text-align: center;
+  border-radius: 6px;
+  background: #f6f8fa;
+}
+
+.mermaid-loading::after {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #d0d7de;
+  border-top-color: #2563EB;
+  border-radius: 50%;
+  animation: mermaid-spin 0.6s linear infinite;
+}
+
+@keyframes mermaid-spin {
+  to { transform: rotate(360deg); }
+}
+
+.mermaid-error {
+  margin: 0.75em 0;
+  padding: 1em;
+  border-radius: 6px;
+  background: #fef2f2;
+  color: #dc2626;
+  font-size: 0.85em;
+}
+
+:is(.dark) .mermaid-loading {
+  background: #1a1a1e;
+}
+
+:is(.dark) .mermaid-error {
+  background: #1a1a1e;
+  color: #f87171;
+}
+
 /* ── Dark mode ── */
 
 :is(.dark) .preview-pane {

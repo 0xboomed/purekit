@@ -1,6 +1,14 @@
 import type { Components } from 'react-markdown'
+import { MermaidDiagram } from './mermaid-diagram'
 
 export const markdownComponents: Components = {
+  code({ className, children }) {
+    const match = /language-(\w+)/.exec(className || '')
+    if (match?.[1] === 'mermaid') {
+      return <MermaidDiagram code={String(children).replace(/\n$/, '')} />
+    }
+    return <code className={className}>{children}</code>
+  },
   img: ({ node, ...props }) => (
     <img
       {...props}
