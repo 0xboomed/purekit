@@ -6,6 +6,11 @@ dist
 
 # Claude Code
 .claude
+.agents
+skills-lock.json
+
+# Playwright MCP
+.playwright-mcp
 
 # Editor / IDE
 .vscode
