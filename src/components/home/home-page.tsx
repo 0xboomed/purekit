@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Search, Globe, Moon, Sun } from 'lucide-react'
+import { Github, Search, Globe, Moon, Sun } from 'lucide-react'
 import { getToolsByCategory, searchTools, CATEGORIES } from '@/tools/registry'
 import type { Category, ToolMeta } from '@/tools/registry'
 import { useT } from '@/i18n/context'
@@ -261,6 +261,24 @@ export function HomePage() {
           </div>
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className="border-t border-border bg-white py-8 dark:border-border-dark dark:bg-gray-900/60">
+        <div className="mx-auto flex max-w-5xl items-center justify-between px-4">
+          <p className="text-xs text-gray-400 dark:text-gray-500">
+            MIT License &copy; {new Date().getFullYear()} PureKit
+          </p>
+          <a
+            href="https://github.com/0xboomed/purekit"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 text-xs text-gray-400 transition-colors hover:text-brand dark:text-gray-500 dark:hover:text-brand"
+          >
+            <Github size={14} />
+            GitHub
+          </a>
+        </div>
+      </footer>
     </div>
   )
 }
