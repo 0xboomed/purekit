@@ -18,6 +18,7 @@ export type Category =
   | 'generator'
   | 'encoder'
   | 'document'
+  | 'pdf'
   | 'image'
 
 export interface CategoryMeta {
@@ -30,6 +31,7 @@ export const CATEGORIES: CategoryMeta[] = [
   { id: 'generator', labelKey: 'category.generator' },
   { id: 'encoder', labelKey: 'category.encoder' },
   { id: 'document', labelKey: 'category.document' },
+  { id: 'pdf', labelKey: 'category.pdf' },
   { id: 'image', labelKey: 'category.image' },
 ]
 
