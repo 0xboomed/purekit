@@ -272,10 +272,10 @@ export function HomePage() {
             href="https://github.com/0xboomed/purekit"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-xs text-gray-400 transition-colors hover:text-brand dark:text-gray-500 dark:hover:text-brand"
+            className="flex items-center gap-2 rounded-full border border-border bg-white px-4 py-2 text-sm text-gray-600 shadow-sm transition-all hover:-translate-y-0.5 hover:border-brand hover:text-brand hover:shadow-md dark:border-border-dark dark:bg-gray-900 dark:text-gray-400 dark:hover:border-brand dark:hover:text-brand"
           >
-            <Github size={14} />
-            GitHub
+            <Github size={16} />
+            <span className="font-medium">Star on GitHub</span>
           </a>
         </div>
       </footer>
