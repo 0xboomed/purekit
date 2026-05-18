@@ -18,7 +18,7 @@ export const translations: Record<string, TranslationMap> = {
     'common.freeOffline': '完全免费，无需安装，数据不上传',
 
     // Home
-    'home.subtitle': '零安装 · 全离线 · 隐私安全的开发者工具箱',
+    'home.subtitle': '零安装 · 全离线 · 隐私安全的综合工具箱',
     'home.search': '搜索工具...',
     'recommend.title': '精选推荐',
 
@@ -369,7 +369,8 @@ export const translations: Record<string, TranslationMap> = {
     'pdfsplit.pages': '页',
     'pdfsplit.noFile': '上传 PDF 文件开始拆分',
     'pdfsplit.invalidRange': '无效的页码范围',
-    'pdfsplit.part': '第',
+    'pdfsplit.allPages': '逐页拆分',
+    'pdfsplit.allPagesHint': '将每一页拆分为独立的 PDF，共 {0} 页',
 
     // Image to PDF tool
     'imagetopdf.settings': '设置',
@@ -399,6 +400,9 @@ export const translations: Record<string, TranslationMap> = {
     'imagecompress.compressionRatio': '压缩率',
     'imagecompress.download': '下载',
     'imagecompress.noImage': '上传图片开始压缩',
+    'imagecompress.compressAll': '批量压缩',
+    'imagecompress.downloadAll': '下载全部',
+    'imagecompress.files': '张图片',
 
     // Image Resize tool
     'imageresize.settings': '设置',
@@ -413,6 +417,10 @@ export const translations: Record<string, TranslationMap> = {
     'imageresize.download': '下载',
     'imageresize.noImage': '上传图片开始裁剪',
     'imageresize.format': '格式',
+    'imageresize.selectAll': '全选',
+    'imageresize.deselectAll': '取消全选',
+    'imageresize.generateAll': '生成全部',
+    'imageresize.downloadAll': '下载全部',
 
     // Markdown tool
     'markdown.edit': '编辑',
@@ -485,7 +493,7 @@ export const translations: Record<string, TranslationMap> = {
 
     // SEO
     'seo.title': '在线工具',
-    'seo.defaultTitle': '开发者工具箱',
+    'seo.defaultTitle': '综合工具箱',
   },
 
   en: {
@@ -505,7 +513,7 @@ export const translations: Record<string, TranslationMap> = {
     'common.freeOffline': 'Free, no installation, data stays on your device',
 
     // Home
-    'home.subtitle': 'Zero-install · Fully offline · Privacy-first developer toolkit',
+    'home.subtitle': 'Zero-install · Fully offline · Privacy-first comprehensive toolkit',
     'home.search': 'Search tools...',
     'recommend.title': 'Recommended Tools',
 
@@ -856,7 +864,8 @@ export const translations: Record<string, TranslationMap> = {
     'pdfsplit.pages': 'pages',
     'pdfsplit.noFile': 'Upload a PDF to start splitting',
     'pdfsplit.invalidRange': 'Invalid page range',
-    'pdfsplit.part': 'Part',
+    'pdfsplit.allPages': 'Split All Pages',
+    'pdfsplit.allPagesHint': 'Split each page into a separate PDF ({0} pages total)',
 
     // Image to PDF tool
     'imagetopdf.settings': 'Settings',
@@ -886,6 +895,9 @@ export const translations: Record<string, TranslationMap> = {
     'imagecompress.compressionRatio': 'Compression Ratio',
     'imagecompress.download': 'Download',
     'imagecompress.noImage': 'Upload an image to start compressing',
+    'imagecompress.compressAll': 'Compress All',
+    'imagecompress.downloadAll': 'Download All',
+    'imagecompress.files': 'images',
 
     // Image Resize tool
     'imageresize.settings': 'Settings',
@@ -900,6 +912,10 @@ export const translations: Record<string, TranslationMap> = {
     'imageresize.download': 'Download',
     'imageresize.noImage': 'Upload an image to start resizing',
     'imageresize.format': 'Format',
+    'imageresize.selectAll': 'Select All',
+    'imageresize.deselectAll': 'Deselect All',
+    'imageresize.generateAll': 'Generate All',
+    'imageresize.downloadAll': 'Download All',
 
     // Markdown tool
     'markdown.edit': 'Edit',
@@ -972,6 +988,6 @@ export const translations: Record<string, TranslationMap> = {
 
     // SEO
     'seo.title': 'Online Tool',
-    'seo.defaultTitle': 'Developer Toolkit',
+    'seo.defaultTitle': 'Comprehensive Toolkit',
   },
 }

@@ -5,7 +5,7 @@ import { ToolCard } from '@/components/shared/tool-card'
 import { ToolFileDrop } from '@/components/shared/tool-file-drop'
 import { useT } from '@/i18n/context'
 
-type SplitMode = 'range' | 'everyN'
+type SplitMode = 'range' | 'everyN' | 'all'
 
 interface SplitResult {
   name: string
@@ -149,7 +149,14 @@ export default function PdfSplitTool() {
     try {
       let splitResults: SplitResult[]
 
-      if (mode === 'range') {
+      if (mode === 'all') {
+        splitResults = await splitByRanges(
+          srcPdf,
+          await file.arrayBuffer(),
+          Array.from({ length: pageCount }, (_, i) => [i]),
+          baseName,
+        )
+      } else if (mode === 'range') {
         if (!rangeInput.trim()) {
           setError(t('pdfsplit.invalidRange'))
           setLoading(false)
@@ -239,6 +246,16 @@ export default function PdfSplitTool() {
                   </label>
                   <div className="flex gap-2">
                     <button
+                      onClick={() => setMode('all')}
+                      className={`flex-1 rounded-lg border px-3 py-2 text-xs font-medium transition-colors ${
+                        mode === 'all'
+                          ? 'border-brand bg-brand/10 text-brand'
+                          : 'border-gray-200 text-gray-500 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800'
+                      }`}
+                    >
+                      {t('pdfsplit.allPages')}
+                    </button>
+                    <button
                       onClick={() => setMode('range')}
                       className={`flex-1 rounded-lg border px-3 py-2 text-xs font-medium transition-colors ${
                         mode === 'range'
@@ -274,7 +291,7 @@ export default function PdfSplitTool() {
                       className="w-full rounded-lg border border-border bg-white px-3 py-2 font-mono text-sm text-gray-700 outline-none transition-shadow focus:border-brand focus:ring-2 focus:ring-brand/15 dark:border-border-dark dark:bg-gray-900 dark:text-gray-200"
                     />
                   </div>
-                ) : (
+                ) : mode === 'everyN' ? (
                   <div>
                     <label className="mb-1.5 block text-xs font-medium text-gray-500 dark:text-gray-400">
                       {t('pdfsplit.pagesPer')}
@@ -287,6 +304,10 @@ export default function PdfSplitTool() {
                       onChange={(e) => setEveryN(Math.max(1, Number(e.target.value)))}
                       className="w-full rounded-lg border border-border bg-white px-3 py-2 text-sm text-gray-700 outline-none transition-shadow focus:border-brand focus:ring-2 focus:ring-brand/15 dark:border-border-dark dark:bg-gray-900 dark:text-gray-200"
                     />
+                  </div>
+                ) : (
+                  <div className="rounded-lg bg-brand/5 px-3 py-2 text-xs text-brand dark:bg-brand/10">
+                    {t('pdfsplit.allPagesHint').replace('{0}', String(pageCount))}
                   </div>
                 )}
 
