@@ -27,6 +27,18 @@ export default function PdfMergeTool() {
   const [mergedSize, setMergedSize] = useState(0)
   const [mergedPageCount, setMergedPageCount] = useState(0)
   const [dragOver, setDragOver] = useState(false)
+  const [dragIdx, setDragIdx] = useState<number | null>(null)
+  const [overIdx, setOverIdx] = useState<number | null>(null)
+
+  const reorderFiles = useCallback((from: number, to: number) => {
+    setFiles((prev) => {
+      const next = [...prev]
+      const [item] = next.splice(from, 1)
+      if (item) next.splice(to, 0, item)
+      return next
+    })
+    setMergedUrl((prev) => { if (prev) URL.revokeObjectURL(prev); return null })
+  }, [])
 
   const addFiles = useCallback(async (incoming: FileList | File[]) => {
     const pdfs: PdfEntry[] = []
@@ -111,12 +123,13 @@ export default function PdfMergeTool() {
   }, [files, mergedUrl])
 
   const download = useCallback(() => {
-    if (!mergedUrl) return
+    if (!mergedUrl || files.length === 0) return
+    const baseName = files[0]!.file.name.replace(/\.pdf$/i, '')
     const a = document.createElement('a')
     a.href = mergedUrl
-    a.download = 'merged.pdf'
+    a.download = `${baseName}_merged.pdf`
     a.click()
-  }, [mergedUrl])
+  }, [mergedUrl, files])
 
   const totalPages = files.reduce((sum, f) => sum + f.pageCount, 0)
 
@@ -160,11 +173,25 @@ export default function PdfMergeTool() {
                   </span>
                 </div>
                 <div className="max-h-64 space-y-1.5 overflow-auto">
-                  {files.map((entry) => (
+                  {files.map((entry, idx) => (
                     <div
                       key={entry.id}
-                      className="flex items-center gap-2 rounded-lg border border-border bg-white px-3 py-2 dark:border-border-dark dark:bg-gray-900"
+                      draggable
+                      onDragStart={() => setDragIdx(idx)}
+                      onDragOver={(e) => { e.preventDefault(); setOverIdx(idx) }}
+                      onDragEnd={() => { setDragIdx(null); setOverIdx(null) }}
+                      onDrop={(e) => {
+                        e.preventDefault()
+                        if (dragIdx !== null && dragIdx !== idx) reorderFiles(dragIdx, idx)
+                        setDragIdx(null); setOverIdx(null)
+                      }}
+                      className={`flex items-center gap-2 rounded-lg border bg-white px-3 py-2 transition-colors dark:bg-gray-900 ${
+                        overIdx === idx && dragIdx !== null && dragIdx !== idx
+                          ? 'border-brand border-dashed'
+                          : 'border-border dark:border-border-dark'
+                      } ${dragIdx === idx ? 'opacity-40' : ''}`}
                     >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 cursor-grab text-gray-300 active:cursor-grabbing dark:text-gray-600"><line x1="8" y1="6" x2="16" y2="6" /><line x1="8" y1="12" x2="16" y2="12" /><line x1="8" y1="18" x2="16" y2="18" /></svg>
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 text-red-500"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><polyline points="14 2 14 8 20 8" /></svg>
                       <div className="min-w-0 flex-1">
                         <div className="truncate text-sm text-gray-700 dark:text-gray-200">{entry.file.name}</div>
