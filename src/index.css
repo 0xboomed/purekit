@@ -51,6 +51,17 @@
   background: rgba(120, 120, 140, 0.6);
 }
 
+/* ── Scrollbar hidden utility ── */
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
 /* ── CodeMirror overrides ── */
 .cm-editor {
   font-size: 14px;
