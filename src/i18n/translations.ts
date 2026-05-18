@@ -221,6 +221,17 @@ export const translations: Record<string, TranslationMap> = {
     'chmod.role_group': '用户组',
     'chmod.role_other': '其他人',
 
+    // YAML Formatter tool
+    'yaml.format': '格式化',
+    'yaml.minify': '压缩',
+    'yaml.validate': '校验',
+    'yaml.toJson': '转 JSON',
+    'yaml.fromJson': 'JSON 转 YAML',
+    'yaml.indent': '缩进',
+    'yaml.valid': '✓ YAML 格式正确',
+    'yaml.inputPlaceholder': '粘贴 YAML 数据...',
+    'yaml.outputPlaceholder': '结果将显示在这里',
+
     // Markdown tool
     'markdown.edit': '编辑',
 
@@ -514,6 +525,17 @@ export const translations: Record<string, TranslationMap> = {
     'chmod.role_owner': 'Owner',
     'chmod.role_group': 'Group',
     'chmod.role_other': 'Other',
+
+    // YAML Formatter tool
+    'yaml.format': 'Format',
+    'yaml.minify': 'Minify',
+    'yaml.validate': 'Validate',
+    'yaml.toJson': 'To JSON',
+    'yaml.fromJson': 'From JSON',
+    'yaml.indent': 'Indent',
+    'yaml.valid': '✓ Valid YAML',
+    'yaml.inputPlaceholder': 'Paste YAML here...',
+    'yaml.outputPlaceholder': 'Output will appear here',
 
     // Markdown tool
     'markdown.edit': 'Edit',
