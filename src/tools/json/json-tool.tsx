@@ -8,7 +8,7 @@ import { CopyButton } from '@/components/shared/copy-button'
 import { useT } from '@/i18n/context'
 
 const SAMPLE = JSON.stringify(
-  { name: 'DevKit', version: '1.0.0', features: ['json', 'base64', 'hash'], nested: { key: 'value' } },
+  { name: 'PureKit', version: '1.0.0', features: ['json', 'base64', 'hash'], nested: { key: 'value' } },
   null,
   0,
 )

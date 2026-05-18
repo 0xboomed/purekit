@@ -12,9 +12,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico'],
       manifest: {
-        name: 'DevKit — 开发者工具箱',
-        short_name: 'DevKit',
-        description: '零安装、全离线、隐私安全的开发者在线工具箱',
+        name: 'PureKit — 综合工具箱',
+        short_name: 'PureKit',
+        description: '零安装、全离线、隐私安全的综合工具箱',
         theme_color: '#3b82f6',
         background_color: '#ffffff',
         display: 'standalone',

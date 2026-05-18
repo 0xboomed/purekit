@@ -14,7 +14,7 @@ export const useAppStore = create<StoreState>()(
       ...createPdfSlice(...a),
     }),
     {
-      name: 'printdown-store',
+      name: 'purekit-store',
       partialize: (state) => ({
         markdownContent: state.markdownContent,
         theme: state.theme,

@@ -112,7 +112,7 @@ export function HomePage() {
   const toggleTheme = useAppStore((s) => s.toggleTheme)
 
   useEffect(() => {
-    document.title = `DevKit — ${t('seo.defaultTitle')}`
+    document.title = `PureKit — ${t('seo.defaultTitle')}`
   }, [t])
 
   const toolsByCategory = useMemo(() => getToolsByCategory(), [])
@@ -159,7 +159,7 @@ export function HomePage() {
             </div>
 
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-50">
-              DevKit
+              PureKit
             </h1>
             <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">
               {t('home.subtitle')}

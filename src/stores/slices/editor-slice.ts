@@ -12,7 +12,7 @@ export interface EditorSlice {
   resetContent: () => void
 }
 
-const DEFAULT_CONTENT = `# Welcome to Printdown
+const DEFAULT_CONTENT = `# Welcome to PureKit
 
 一个**零安装**、*完全离线*的 Markdown 转 PDF 工具。
 
@@ -30,7 +30,7 @@ function hello(name: string): string {
   return \`Hello, \${name}!\`
 }
 
-console.log(hello('Printdown'))
+console.log(hello('PureKit'))
 \`\`\`
 
 ## 表格

@@ -20,16 +20,16 @@ export function ToolLayout({ title, titleEn, description, descriptionEn, icon: I
   const displayName = locale === 'en' ? titleEn : title
 
   useEffect(() => {
-    document.title = `${displayName} - ${t('seo.title')} | DevKit`
+    document.title = `${displayName} - ${t('seo.title')} | PureKit`
     const meta = document.querySelector('meta[name="description"]')
     if (meta) {
       const desc = locale === 'en' ? descriptionEn : description
       meta.setAttribute('content', `${desc ?? ''}. ${t('common.freeOffline')}`)
     }
     return () => {
-      document.title = `DevKit — ${t('seo.defaultTitle')}`
+      document.title = `PureKit — ${t('seo.defaultTitle')}`
       if (meta) {
-        meta.setAttribute('content', 'Zero-install, fully offline, privacy-first developer toolkit.')
+        meta.setAttribute('content', 'Zero-install, fully offline, privacy-first comprehensive toolkit.')
       }
     }
   }, [displayName, description, descriptionEn, locale, t])
