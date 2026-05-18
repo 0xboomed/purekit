@@ -197,6 +197,30 @@ export const translations: Record<string, TranslationMap> = {
     'qrcode.logoAutoLevel': '已自动切换为高容错',
     'qrcode.logoHint': 'Logo 占用约 20% 面积',
 
+    // SQL Formatter tool
+    'sql.format': '格式化',
+    'sql.minify': '压缩',
+    'sql.dialect': '方言',
+    'sql.indent': '缩进',
+    'sql.case': '大小写',
+    'sql.preserve': '保持',
+    'sql.inputPlaceholder': '粘贴 SQL 语句...',
+    'sql.outputPlaceholder': '格式化结果将显示在这里',
+
+    // chmod Calculator tool
+    'chmod.octal': '八进制',
+    'chmod.symbolic': '符号表示',
+    'chmod.octalInput': '输入八进制',
+    'chmod.permissions': '权限设置',
+    'chmod.presets': '常用预设',
+    'chmod.value': '值',
+    'chmod.perm_read': '读',
+    'chmod.perm_write': '写',
+    'chmod.perm_execute': '执行',
+    'chmod.role_owner': '所有者',
+    'chmod.role_group': '用户组',
+    'chmod.role_other': '其他人',
+
     // Markdown tool
     'markdown.edit': '编辑',
 
@@ -466,6 +490,30 @@ export const translations: Record<string, TranslationMap> = {
     'qrcode.logoRemove': 'Remove',
     'qrcode.logoAutoLevel': 'Auto-switched to high error correction',
     'qrcode.logoHint': 'Logo covers ~20% of QR area',
+
+    // SQL Formatter tool
+    'sql.format': 'Format',
+    'sql.minify': 'Minify',
+    'sql.dialect': 'Dialect',
+    'sql.indent': 'Indent',
+    'sql.case': 'Case',
+    'sql.preserve': 'Preserve',
+    'sql.inputPlaceholder': 'Paste SQL query here...',
+    'sql.outputPlaceholder': 'Formatted result will appear here',
+
+    // chmod Calculator tool
+    'chmod.octal': 'Octal',
+    'chmod.symbolic': 'Symbolic',
+    'chmod.octalInput': 'Enter Octal',
+    'chmod.permissions': 'Permissions',
+    'chmod.presets': 'Common Presets',
+    'chmod.value': 'Value',
+    'chmod.perm_read': 'Read',
+    'chmod.perm_write': 'Write',
+    'chmod.perm_execute': 'Execute',
+    'chmod.role_owner': 'Owner',
+    'chmod.role_group': 'Group',
+    'chmod.role_other': 'Other',
 
     // Markdown tool
     'markdown.edit': 'Edit',
