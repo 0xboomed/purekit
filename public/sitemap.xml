@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://purekit-app.vercel.app/</loc><priority>1.0</priority></url>
+  <url><loc>https://purekit-app.vercel.app/json</loc><priority>0.8</priority></url>
+  <url><loc>https://purekit-app.vercel.app/base64</loc><priority>0.8</priority></url>
+  <url><loc>https://purekit-app.vercel.app/hash</loc><priority>0.8</priority></url>
+  <url><loc>https://purekit-app.vercel.app/url</loc><priority>0.8</priority></url>
+  <url><loc>https://purekit-app.vercel.app/uuid</loc><priority>0.8</priority></url>
+  <url><loc>https://purekit-app.vercel.app/password</loc><priority>0.8</priority></url>
+  <url><loc>https://purekit-app.vercel.app/regex</loc><priority>0.8</priority></url>
+  <url><loc>https://purekit-app.vercel.app/color</loc><priority>0.8</priority></url>
+  <url><loc>https://purekit-app.vercel.app/timestamp</loc><priority>0.8</priority></url>
+  <url><loc>https://purekit-app.vercel.app/markdown</loc><priority>0.8</priority></url>
+  <url><loc>https://purekit-app.vercel.app/qrcode</loc><priority>0.8</priority></url>
+  <url><loc>https://purekit-app.vercel.app/yaml</loc><priority>0.8</priority></url>
+  <url><loc>https://purekit-app.vercel.app/sql</loc><priority>0.8</priority></url>
+  <url><loc>https://purekit-app.vercel.app/chmod</loc><priority>0.7</priority></url>
+  <url><loc>https://purekit-app.vercel.app/jwt</loc><priority>0.7</priority></url>
+  <url><loc>https://purekit-app.vercel.app/url-parser</loc><priority>0.7</priority></url>
+  <url><loc>https://purekit-app.vercel.app/base-converter</loc><priority>0.7</priority></url>
+  <url><loc>https://purekit-app.vercel.app/http-status</loc><priority>0.7</priority></url>
+  <url><loc>https://purekit-app.vercel.app/lorem</loc><priority>0.7</priority></url>
+  <url><loc>https://purekit-app.vercel.app/cron</loc><priority>0.7</priority></url>
+  <url><loc>https://purekit-app.vercel.app/diff</loc><priority>0.7</priority></url>
+  <url><loc>https://purekit-app.vercel.app/image</loc><priority>0.7</priority></url>
+  <url><loc>https://purekit-app.vercel.app/svg</loc><priority>0.7</priority></url>
+  <url><loc>https://purekit-app.vercel.app/apikey</loc><priority>0.7</priority></url>
+  <url><loc>https://purekit-app.vercel.app/pdf-merge</loc><priority>0.7</priority></url>
+  <url><loc>https://purekit-app.vercel.app/pdf-split</loc><priority>0.7</priority></url>
+  <url><loc>https://purekit-app.vercel.app/image-to-pdf</loc><priority>0.7</priority></url>
+  <url><loc>https://purekit-app.vercel.app/image-compress</loc><priority>0.7</priority></url>
+  <url><loc>https://purekit-app.vercel.app/image-resize</loc><priority>0.7</priority></url>
+</urlset>

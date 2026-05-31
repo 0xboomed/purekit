@@ -39,7 +39,7 @@ const RECOMMENDED: RecommendedCategory[] = [
     tools: [
       { name: 'Warp', nameEn: 'Warp', url: 'https://www.warp.dev', description: 'AI 驱动的现代终端', descriptionEn: 'AI-powered modern terminal' },
       { name: 'iTerm2', nameEn: 'iTerm2', url: 'https://iterm2.com', description: 'macOS 上的终端替代品', descriptionEn: 'Terminal replacement for macOS' },
-      { name: 'Windows Terminal', nameEn: 'Windows Terminal', url: 'https://aka.ms/terminal', description: 'Windows 官方现代终端', descriptionEn: 'Official modern terminal for Windows' },
+      { name: 'Windows Terminal', nameEn: 'Windows Terminal', url: 'https://apps.microsoft.com/detail/9N0DX20HK701', description: 'Windows 官方现代终端', descriptionEn: 'Official modern terminal for Windows' },
     ],
   },
   {
@@ -89,7 +89,7 @@ function ToolFavicon({ url, name }: { url: string; name: string }) {
   if (error) {
     const letter = name.charAt(0).toUpperCase()
     return (
-      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-brand/10 text-sm font-bold text-brand dark:bg-brand/15">
+      <div role="img" aria-label={name} className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-brand/10 text-sm font-bold text-brand dark:bg-brand/15">
         {letter}
       </div>
     )
@@ -145,12 +145,14 @@ export function HomePage() {
             <div className="absolute right-0 top-0 flex items-center gap-2">
               <button
                 onClick={toggleTheme}
+                aria-label={theme === 'dark' ? t('common.lightMode') : t('common.darkMode')}
                 className="flex items-center justify-center rounded-full border border-border p-1.5 text-gray-500 transition-colors hover:border-brand hover:text-brand dark:border-border-dark dark:text-gray-400 dark:hover:border-brand dark:hover:text-brand"
               >
                 {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
               </button>
               <button
                 onClick={() => setLocale(locale === 'zh' ? 'en' : 'zh')}
+                aria-label={locale === 'zh' ? 'Switch to English' : '切换到中文'}
                 className="flex items-center gap-1 rounded-full border border-border px-3 py-1 text-xs text-gray-500 transition-colors hover:border-brand hover:text-brand dark:border-border-dark dark:text-gray-400 dark:hover:border-brand dark:hover:text-brand"
               >
                 <Globe size={12} />
@@ -173,6 +175,7 @@ export function HomePage() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder={t('home.search')}
+                aria-label={t('home.search')}
                 className="w-full rounded-xl border border-border bg-white py-3 pl-11 pr-4 text-sm text-gray-700 shadow-sm outline-none transition-all placeholder:text-gray-400 focus:border-brand focus:shadow-md focus:ring-2 focus:ring-brand/10 dark:border-border-dark dark:bg-gray-900 dark:text-gray-200 dark:placeholder:text-gray-500 dark:focus:ring-brand/20"
               />
             </div>

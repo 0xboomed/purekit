@@ -21,6 +21,7 @@ export function CopyButton({ text, className = '' }: CopyButtonProps) {
     <button
       onClick={handleCopy}
       disabled={!text}
+      aria-label={copied ? t('common.copied') : t('common.copy')}
       className={`flex items-center gap-1 rounded-md px-2 py-1 text-xs transition-colors ${
         copied
           ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400'

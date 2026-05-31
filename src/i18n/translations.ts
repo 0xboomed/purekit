@@ -15,7 +15,13 @@ export const translations: Record<string, TranslationMap> = {
     'common.clickToSelect': '点击选择文件',
     'common.processing': '计算中...',
     'common.notFound': '页面不存在',
+    'common.loading': '加载中...',
+    'common.darkMode': '切换深色模式',
+    'common.lightMode': '切换浅色模式',
     'common.freeOffline': '完全免费，无需安装，数据不上传',
+
+    // PDF Merge
+    'pdfMerge.skippedFiles': '以下文件无法解析，已跳过：',
 
     // Home
     'home.subtitle': '零安装 · 全离线 · 隐私安全的综合工具箱',
@@ -510,7 +516,13 @@ export const translations: Record<string, TranslationMap> = {
     'common.clickToSelect': 'Click to select a file',
     'common.processing': 'Processing...',
     'common.notFound': 'Page not found',
+    'common.loading': 'Loading...',
+    'common.darkMode': 'Switch to dark mode',
+    'common.lightMode': 'Switch to light mode',
     'common.freeOffline': 'Free, no installation, data stays on your device',
+
+    // PDF Merge
+    'pdfMerge.skippedFiles': 'The following files could not be parsed and were skipped:',
 
     // Home
     'home.subtitle': 'Zero-install · Fully offline · Privacy-first comprehensive toolkit',

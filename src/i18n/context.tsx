@@ -1,4 +1,4 @@
-import { createContext, useContext, type ReactNode } from 'react'
+import { createContext, useContext, useEffect, type ReactNode } from 'react'
 import { useAppStore } from '@/stores/use-app-store'
 import { translations } from './translations'
 import type { Locale } from './types'
@@ -18,6 +18,10 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
   const t = (key: string): string => {
     return translations[locale]?.[key] ?? translations['zh']?.[key] ?? key
   }
+
+  useEffect(() => {
+    document.documentElement.lang = locale === 'en' ? 'en' : 'zh-CN'
+  }, [locale])
 
   return (
     <I18nContext.Provider value={{ locale, setLocale, t }}>

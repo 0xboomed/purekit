@@ -42,6 +42,7 @@ export default function PdfMergeTool() {
 
   const addFiles = useCallback(async (incoming: FileList | File[]) => {
     const pdfs: PdfEntry[] = []
+    const skipped: string[] = []
     for (const file of Array.from(incoming)) {
       if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) continue
       try {
@@ -53,14 +54,17 @@ export default function PdfMergeTool() {
           pageCount: pdf.getPageCount(),
         })
       } catch {
-        // skip invalid PDFs
+        skipped.push(file.name)
       }
     }
     if (pdfs.length > 0) {
       setFiles((prev) => [...prev, ...pdfs])
       setMergedUrl((prev) => { if (prev) URL.revokeObjectURL(prev); return null })
     }
-  }, [])
+    if (skipped.length > 0) {
+      alert(t('pdfMerge.skippedFiles') + '\n' + skipped.join('\n'))
+    }
+  }, [t])
 
   const removeFile = useCallback((id: string) => {
     setFiles((prev) => prev.filter((f) => f.id !== id))

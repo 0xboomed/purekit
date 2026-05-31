@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://purekit-app.vercel.app/sitemap.xml

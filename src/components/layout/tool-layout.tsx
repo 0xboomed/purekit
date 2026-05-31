@@ -39,6 +39,7 @@ export function ToolLayout({ title, titleEn, description, descriptionEn, icon: I
       <header className="flex h-14 shrink-0 items-center gap-2 border-b border-border bg-surface px-4 dark:border-border-dark dark:bg-surface-dark">
         <button
           onClick={() => navigate('/')}
+          aria-label={t('common.back')}
           className="rounded-md p-1.5 text-gray-400 transition-colors hover:bg-bg-secondary hover:text-gray-600 dark:text-gray-500 dark:hover:bg-bg-secondary-dark dark:hover:text-gray-300"
           title={t('common.back')}
         >
@@ -55,6 +56,7 @@ export function ToolLayout({ title, titleEn, description, descriptionEn, icon: I
         )}
         <button
           onClick={() => setLocale(locale === 'zh' ? 'en' : 'zh')}
+          aria-label={locale === 'zh' ? 'Switch to English' : '切换到中文'}
           className="ml-auto flex items-center gap-1 rounded-md px-2 py-1 text-xs text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
         >
           <Globe size={12} />

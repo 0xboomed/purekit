@@ -34,9 +34,11 @@ export function App() {
 }
 
 function ToolLoading() {
+  const { t } = useT()
   return (
-    <div className="flex h-screen items-center justify-center text-gray-400">
+    <div className="flex h-screen flex-col items-center justify-center gap-3 text-gray-400">
       <div className="h-5 w-5 animate-spin rounded-full border-2 border-gray-300 border-t-brand" />
+      <p className="text-xs">{t('common.loading')}</p>
     </div>
   )
 }

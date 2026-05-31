@@ -2,18 +2,26 @@ interface ToolSegmentedControlProps<T extends string> {
   options: Array<{ value: T; label: string }>
   value: T
   onChange: (value: T) => void
+  label?: string
 }
 
 export function ToolSegmentedControl<T extends string>({
   options,
   value,
   onChange,
+  label,
 }: ToolSegmentedControlProps<T>) {
   return (
-    <div className="flex rounded-lg bg-bg-secondary p-0.5 dark:bg-bg-secondary-dark">
+    <div
+      role="tablist"
+      aria-label={label}
+      className="flex rounded-lg bg-bg-secondary p-0.5 dark:bg-bg-secondary-dark"
+    >
       {options.map((opt) => (
         <button
           key={opt.value}
+          role="tab"
+          aria-selected={value === opt.value}
           onClick={() => onChange(opt.value)}
           className={`rounded-md px-3 py-1 text-xs font-medium transition-colors ${
             value === opt.value

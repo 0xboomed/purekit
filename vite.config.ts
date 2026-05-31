@@ -5,12 +5,31 @@ import { VitePWA } from 'vite-plugin-pwa'
 import { fileURLToPath, URL } from 'node:url'
 
 export default defineConfig({
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          'vendor-pdf': ['pdf-lib', 'jspdf'],
+          'vendor-mermaid': ['mermaid'],
+          'vendor-katex': ['katex'],
+          'vendor-codemirror': [
+            '@codemirror/lang-markdown',
+            '@codemirror/language-data',
+            '@codemirror/view',
+            '@codemirror/state',
+          ],
+          'vendor-markdown': ['react-markdown', 'remark-gfm', 'rehype-highlight'],
+        },
+      },
+    },
+  },
   plugins: [
     tailwindcss(),
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico'],
+      includeAssets: ['icon.svg'],
       manifest: {
         name: 'PureKit — 综合工具箱',
         short_name: 'PureKit',
@@ -40,17 +59,7 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
-        runtimeCaching: [
-          {
-            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'google-fonts-cache',
-              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 },
-              cacheableResponse: { statuses: [0, 200] },
-            },
-          },
-        ],
+        navigateFallback: '/index.html',
       },
     }),
   ],
