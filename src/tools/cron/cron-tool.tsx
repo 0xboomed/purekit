@@ -1,8 +1,8 @@
 import { useState, useCallback } from 'react'
-import { CronExpressionParser } from 'cron-parser'
 import { ToolPageSplit } from '@/components/shared/tool-page-split'
 import { ToolCard } from '@/components/shared/tool-card'
 import { useT } from '@/i18n/context'
+import { getNextExecutions } from './cron-logic'
 
 const PRESETS = [
   { label: '* * * * *', desc: 'everyMinute' },
@@ -29,23 +29,13 @@ export default function CronTool() {
   const [error, setError] = useState('')
 
   const parse = useCallback((value: string) => {
-    if (!value.trim()) {
+    const result = getNextExecutions(value, 5)
+    if (result.error) {
+      setError(result.error)
       setNextTimes([])
+    } else {
+      setNextTimes(result.times.map(formatDate))
       setError('')
-      return
-    }
-    try {
-      const interval = CronExpressionParser.parse(value)
-      const times: string[] = []
-      for (let i = 0; i < 5; i++) {
-        const next = interval.next()
-        times.push(formatDate(next.toDate()))
-      }
-      setNextTimes(times)
-      setError('')
-    } catch (e) {
-      setError(e instanceof Error ? e.message : String(e))
-      setNextTimes([])
     }
   }, [])
 
