@@ -15,45 +15,40 @@ export async function exportPdf(
   iframe.style.border = 'none'
   document.body.appendChild(iframe)
 
-  await new Promise<void>((resolve) => {
-    let finished = false
-    const finish = () => {
-      if (finished) return
-      finished = true
+  return new Promise((resolve) => {
+    let removed = false
+    const removeIframe = () => {
+      if (removed) return
+      removed = true
       document.body.removeChild(iframe)
-      resolve()
     }
-
-    // Safety net: placed outside onload so it always starts, covering the
-    // rare browser where print() returns immediately and no event fires.
-    const safety = window.setTimeout(finish, 60_000)
 
     iframe.onload = () => {
       const win = iframe.contentWindow
       if (!win) {
-        finish()
+        removeIframe()
+        resolve()
         return
       }
 
-      // Backup signals for browsers where print() does not block.
-      win.addEventListener('afterprint', finish, { once: true })
-      const mediaQueryList = win.matchMedia('print')
-      mediaQueryList.addEventListener('change', (e) => {
-        if (!e.matches) finish()
-      })
+      // The print dialog is now open, which means the document is fully
+      // prepared. Release the loading state right here: print() is
+      // non-blocking in Chrome, so it returns immediately after queuing
+      // the dialog. We intentionally do NOT wait for print completion,
+      // because we cannot reliably detect whether the user prints or
+      // cancels — and tying the button state to that is what caused the
+      // stuck-on-cancel bug.
+
+      // Best-effort iframe cleanup once the print truly finishes. Removing
+      // it earlier destroys the preview content, so this is the ONLY place
+      // we remove it.
+      win.addEventListener('afterprint', removeIframe, { once: true })
 
       win.focus()
       try {
-        // In Chrome/Edge/Firefox, print() blocks until the print dialog is
-        // dismissed — whether the user prints or cancels. Finishing right
-        // after it returns reliably clears the loading state on cancel,
-        // where afterprint/matchMedia are flaky.
         win.print()
-      } catch {
-        // Ignore print errors (e.g. user dismissed a pre-print prompt).
       } finally {
-        window.clearTimeout(safety)
-        finish()
+        resolve()
       }
     }
     iframe.srcdoc = html
