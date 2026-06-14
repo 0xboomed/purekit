@@ -3,17 +3,19 @@ import { useNavigate } from 'react-router-dom'
 import { ArrowLeft, Globe } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { useT } from '@/i18n/context'
+import { setToolJsonLd, clearToolJsonLd } from '@/lib/seo'
 
 interface ToolLayoutProps {
   title: string
   titleEn: string
   description?: string
   descriptionEn?: string
+  path?: string
   icon: LucideIcon
   children: React.ReactNode
 }
 
-export function ToolLayout({ title, titleEn, description, descriptionEn, icon: Icon, children }: ToolLayoutProps) {
+export function ToolLayout({ title, titleEn, description, descriptionEn, path, icon: Icon, children }: ToolLayoutProps) {
   const navigate = useNavigate()
   const { t, locale, setLocale } = useT()
 
@@ -26,13 +28,21 @@ export function ToolLayout({ title, titleEn, description, descriptionEn, icon: I
       const desc = locale === 'en' ? descriptionEn : description
       meta.setAttribute('content', `${desc ?? ''}. ${t('common.freeOffline')}`)
     }
+    if (path) {
+      setToolJsonLd({
+        name: displayName,
+        description: (locale === 'en' ? descriptionEn : description) ?? displayName,
+        path,
+      })
+    }
     return () => {
       document.title = `PureKit — ${t('seo.defaultTitle')}`
       if (meta) {
         meta.setAttribute('content', 'Zero-install, fully offline, privacy-first comprehensive toolkit.')
       }
+      clearToolJsonLd()
     }
-  }, [displayName, description, descriptionEn, locale, t])
+  }, [displayName, description, descriptionEn, path, locale, t])
 
   return (
     <div className="flex h-screen flex-col bg-white text-gray-900 dark:bg-surface-dark dark:text-gray-100">

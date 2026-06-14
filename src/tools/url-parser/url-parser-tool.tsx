@@ -4,41 +4,9 @@ import { ToolCard } from '@/components/shared/tool-card'
 import { ToolInput } from '@/components/shared/tool-input'
 import { CopyButton } from '@/components/shared/copy-button'
 import { useT } from '@/i18n/context'
+import { parseUrl } from './url-parser-logic'
 
 const SAMPLE_URL = 'https://example.com:8080/path/to/page?name=devkit&version=2.0&theme=dark#section-1'
-
-interface ParsedUrl {
-  protocol: string
-  hostname: string
-  port: string
-  pathname: string
-  hash: string
-  params: Array<{ key: string; value: string }>
-}
-
-function parseUrl(input: string): { data: ParsedUrl | null; error: string } {
-  if (!input.trim()) return { data: null, error: '' }
-  try {
-    const url = new URL(input)
-    const params: Array<{ key: string; value: string }> = []
-    url.searchParams.forEach((value, key) => {
-      params.push({ key, value })
-    })
-    return {
-      data: {
-        protocol: url.protocol,
-        hostname: url.hostname,
-        port: url.port,
-        pathname: url.pathname,
-        hash: url.hash,
-        params,
-      },
-      error: '',
-    }
-  } catch {
-    return { data: null, error: 'urlparser.invalidUrl' }
-  }
-}
 
 export default function UrlParserTool() {
   const { t } = useT()
@@ -88,9 +56,9 @@ export default function UrlParserTool() {
       }
       output={
         <div className="flex flex-col gap-4">
-          {result.error && (
+          {result.isError && (
             <div className="rounded-lg bg-red-50 px-4 py-2.5 text-sm text-red-600 dark:bg-red-900/20 dark:text-red-400">
-              {t(result.error)}
+              {t('urlparser.invalidUrl')}
             </div>
           )}
 
@@ -151,7 +119,7 @@ export default function UrlParserTool() {
             </ToolCard>
           )}
 
-          {!input.trim() && !result.error && (
+          {!input.trim() && !result.isError && (
             <div className="flex items-center justify-center py-16 text-sm text-gray-400">
               {t('urlparser.inputPlaceholder')}
             </div>

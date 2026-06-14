@@ -19,7 +19,7 @@ export function App() {
             key={tool.path}
             path={tool.path}
             element={
-              <ToolLayout title={tool.name} titleEn={tool.nameEn} icon={tool.icon} description={tool.description} descriptionEn={tool.descriptionEn}>
+              <ToolLayout title={tool.name} titleEn={tool.nameEn} icon={tool.icon} description={tool.description} descriptionEn={tool.descriptionEn} path={tool.path}>
                 <Suspense fallback={<ToolLoading />}>
                   <tool.component />
                 </Suspense>
