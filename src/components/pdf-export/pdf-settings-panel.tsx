@@ -110,47 +110,10 @@ export function PdfSettingsPanel() {
             </div>
           </Section>
 
-          {/* Header */}
-          <Section title={t('pdf.header')}>
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={pdfSettings.showHeader}
-                onChange={(e) => setPdfSettings({ showHeader: e.target.checked })}
-                className="rounded border-gray-300 text-brand focus:ring-brand"
-              />
-              <span className="text-sm text-gray-600">{t('pdf.showHeader')}</span>
-            </label>
-            {pdfSettings.showHeader && (
-              <p className="mt-1.5 text-xs text-gray-400">
-                {t('pdf.headerHint')}
-              </p>
-            )}
-          </Section>
-
-          {/* Footer */}
-          <Section title={t('pdf.footer')}>
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={pdfSettings.showFooter}
-                onChange={(e) => setPdfSettings({ showFooter: e.target.checked })}
-                className="rounded border-gray-300 text-brand focus:ring-brand"
-              />
-              <span className="text-sm text-gray-600">{t('pdf.showFooter')}</span>
-            </label>
-            {pdfSettings.showFooter && (
-              <label className="mt-2 flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={pdfSettings.showPageNumbers}
-                  onChange={(e) => setPdfSettings({ showPageNumbers: e.target.checked })}
-                  className="rounded border-gray-300 text-brand focus:ring-brand"
-                />
-                <span className="text-sm text-gray-600">{t('pdf.showPageNumbers')}</span>
-              </label>
-            )}
-          </Section>
+          {/* Browser-native header/footer note */}
+          <div className="rounded-md bg-blue-50 px-3 py-2.5 text-xs leading-relaxed text-gray-500 dark:bg-blue-900/20 dark:text-gray-400">
+            {t('pdf.nativeHeaderFooter')}
+          </div>
         </div>
 
         {/* Footer */}

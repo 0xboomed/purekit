@@ -9,10 +9,6 @@ export interface PdfSettings {
   marginBottom: string
   marginLeft: string
   marginRight: string
-  showHeader: boolean
-  headerContent: string
-  showFooter: boolean
-  showPageNumbers: boolean
 }
 
 export const DEFAULT_PDF_SETTINGS: PdfSettings = {
@@ -22,8 +18,4 @@ export const DEFAULT_PDF_SETTINGS: PdfSettings = {
   marginBottom: '20mm',
   marginLeft: '20mm',
   marginRight: '20mm',
-  showHeader: false,
-  headerContent: '{{title}}',
-  showFooter: true,
-  showPageNumbers: true,
 }
