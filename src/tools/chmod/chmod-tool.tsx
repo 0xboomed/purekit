@@ -3,14 +3,20 @@ import { ToolPage } from '@/components/shared/tool-page'
 import { ToolCard } from '@/components/shared/tool-card'
 import { CopyButton } from '@/components/shared/copy-button'
 import { useT } from '@/i18n/context'
+import {
+  octalToPermissions,
+  permissionsToOctal,
+  permissionsToSymbolic,
+  sanitizeOctal,
+  ROLES,
+  PERMS,
+  PERM_VALUES,
+  PERM_LETTERS,
+  type Role,
+  type Perm,
+  type Permissions,
+} from './chmod-logic'
 
-type Role = 'owner' | 'group' | 'other'
-type Perm = 'read' | 'write' | 'execute'
-
-const PERM_VALUES: Record<Perm, number> = { read: 4, write: 2, execute: 1 }
-const PERM_LETTERS: Record<Perm, string> = { read: 'r', write: 'w', execute: 'x' }
-const ROLES: Role[] = ['owner', 'group', 'other']
-const PERMS: Perm[] = ['read', 'write', 'execute']
 const PRESETS = [
   { octal: '755', label: '755' },
   { octal: '644', label: '644' },
@@ -20,37 +26,9 @@ const PRESETS = [
   { octal: '750', label: '750' },
 ]
 
-function octalToPermissions(octal: string): Record<Role, Record<Perm, boolean>> {
-  const perms: Record<Role, Record<Perm, boolean>> = {
-    owner: { read: false, write: false, execute: false },
-    group: { read: false, write: false, execute: false },
-    other: { read: false, write: false, execute: false },
-  }
-  const digits = octal.padStart(3, '0').slice(0, 3).split('').map(Number)
-  ROLES.forEach((role, i) => {
-    const d = digits[i] ?? 0
-    perms[role].read = !!(d & 4)
-    perms[role].write = !!(d & 2)
-    perms[role].execute = !!(d & 1)
-  })
-  return perms
-}
-
-function permissionsToOctal(perms: Record<Role, Record<Perm, boolean>>): string {
-  return ROLES.map((role) =>
-    PERMS.reduce((sum, p) => sum + (perms[role][p] ? PERM_VALUES[p] : 0), 0),
-  ).join('')
-}
-
-function permissionsToSymbolic(perms: Record<Role, Record<Perm, boolean>>): string {
-  return ROLES.map((role) =>
-    PERMS.map((p) => (perms[role][p] ? PERM_LETTERS[p] : '-')).join(''),
-  ).join('')
-}
-
 export default function ChmodTool() {
   const { t } = useT()
-  const [perms, setPerms] = useState<Record<Role, Record<Perm, boolean>>>({
+  const [perms, setPerms] = useState<Permissions>({
     owner: { read: true, write: true, execute: true },
     group: { read: true, write: false, execute: true },
     other: { read: true, write: false, execute: true },
@@ -68,7 +46,7 @@ export default function ChmodTool() {
   }, [])
 
   const applyOctal = useCallback((value: string) => {
-    const clean = value.replace(/[^0-7]/g, '').slice(0, 3)
+    const clean = sanitizeOctal(value)
     setOctalInput(clean)
     if (clean.length === 3) {
       setPerms(octalToPermissions(clean))

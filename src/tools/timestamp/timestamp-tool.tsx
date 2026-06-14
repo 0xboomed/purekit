@@ -6,6 +6,20 @@ import { ToolActionBar } from '@/components/shared/tool-action-bar'
 import { ToolSegmentedControl } from '@/components/shared/tool-segmented-control'
 import { CopyButton } from '@/components/shared/copy-button'
 import { useT } from '@/i18n/context'
+import { timestampToMs, isValidTimestamp, dateStringToTimestamp, getRelative, type RelativeBucket } from './timestamp-logic'
+
+const RELATIVE_LATER: Record<RelativeBucket, string> = {
+  seconds: 'timestamp.secondsLater',
+  minutes: 'timestamp.minutesLater',
+  hours: 'timestamp.hoursLater',
+  days: 'timestamp.daysLater',
+}
+const RELATIVE_AGO: Record<RelativeBucket, string> = {
+  seconds: 'timestamp.secondsAgo',
+  minutes: 'timestamp.minutesAgo',
+  hours: 'timestamp.hoursAgo',
+  days: 'timestamp.daysAgo',
+}
 
 export default function TimestampTool() {
   const { t, locale } = useT()
@@ -22,16 +36,21 @@ export default function TimestampTool() {
   }, [])
 
   const formatTs = useCallback((ts: number, isMs: boolean) => {
-    const ms = isMs ? ts : ts * 1000
+    const ms = timestampToMs(ts, isMs ? 'ms' : 's')
     const d = new Date(ms)
-    if (isNaN(d.getTime())) return null
+    if (!isValidTimestamp(ts, isMs ? 'ms' : 's')) return null
     return {
       local: d.toLocaleString(locale === 'en' ? 'en-US' : 'zh-CN', { timeZone: tz }),
       utc: d.toUTCString(),
       iso: d.toISOString(),
-      relative: getRelative(ms, t),
+      relative: getRelative(ms, Date.now()),
     }
-  }, [tz, locale, t])
+  }, [tz, locale])
+
+  const formatRelative = useCallback((result: ReturnType<typeof getRelative>): string => {
+    const key = result.isFuture ? RELATIVE_LATER[result.bucket] : RELATIVE_AGO[result.bucket]
+    return `${result.value}${t(key)}`
+  }, [t])
 
   const toReadable = useCallback(() => {
     if (!input.trim()) return
@@ -49,19 +68,18 @@ export default function TimestampTool() {
       `${t('timestamp.local')}: ${result.local}`,
       `${t('timestamp.utc')}: ${result.utc}`,
       `ISO 8601: ${result.iso}`,
-      `${t('timestamp.relative')}: ${result.relative}`,
+      `${t('timestamp.relative')}: ${formatRelative(result.relative)}`,
     ].join('\n'))
     setError('')
-  }, [input, unit, formatTs, t])
+  }, [input, unit, formatTs, t, formatRelative])
 
   const toTimestamp = useCallback(() => {
     if (!input.trim()) return
-    const d = new Date(input)
-    if (isNaN(d.getTime())) {
+    const ts = dateStringToTimestamp(input, unit)
+    if (ts === null) {
       setError(t('timestamp.invalidDate'))
       return
     }
-    const ts = unit === 'ms' ? d.getTime() : Math.floor(d.getTime() / 1000)
     setOutput(String(ts))
     setError('')
   }, [input, unit, t])
@@ -138,15 +156,4 @@ export default function TimestampTool() {
       }
     />
   )
-}
-
-function getRelative(ms: number, t: (key: string) => string): string {
-  const diff = Date.now() - ms
-  const abs = Math.abs(diff)
-  const future = diff < 0
-
-  if (abs < 60000) return future ? `${Math.floor(abs / 1000)}${t('timestamp.secondsLater')}` : `${Math.floor(abs / 1000)}${t('timestamp.secondsAgo')}`
-  if (abs < 3600000) return future ? `${Math.floor(abs / 60000)}${t('timestamp.minutesLater')}` : `${Math.floor(abs / 60000)}${t('timestamp.minutesAgo')}`
-  if (abs < 86400000) return future ? `${Math.floor(abs / 3600000)}${t('timestamp.hoursLater')}` : `${Math.floor(abs / 3600000)}${t('timestamp.hoursAgo')}`
-  return future ? `${Math.floor(abs / 86400000)}${t('timestamp.daysLater')}` : `${Math.floor(abs / 86400000)}${t('timestamp.daysAgo')}`
 }

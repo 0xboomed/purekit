@@ -3,42 +3,25 @@ import { ToolPage } from '@/components/shared/tool-page'
 import { ToolCard } from '@/components/shared/tool-card'
 import { CopyButton } from '@/components/shared/copy-button'
 import { useT } from '@/i18n/context'
-
-interface BaseField {
-  key: 'bin' | 'oct' | 'dec' | 'hex' | 'ascii'
-  labelKey: string
-  radix: number | null
-  placeholder: string
-}
-
-const FIELDS: BaseField[] = [
-  { key: 'bin', labelKey: 'baseconverter.binary', radix: 2, placeholder: '0b' },
-  { key: 'oct', labelKey: 'baseconverter.octal', radix: 8, placeholder: '0o' },
-  { key: 'dec', labelKey: 'baseconverter.decimal', radix: 10, placeholder: '0' },
-  { key: 'hex', labelKey: 'baseconverter.hexadecimal', radix: 16, placeholder: '0x' },
-  { key: 'ascii', labelKey: 'baseconverter.ascii', radix: null, placeholder: 'A' },
-]
-
-interface FieldValues {
-  bin: string
-  oct: string
-  dec: string
-  hex: string
-  ascii: string
-}
-
-const EMPTY_VALUES: FieldValues = { bin: '', oct: '', dec: '', hex: '', ascii: '' }
+import {
+  FIELDS,
+  EMPTY_CONVERSION,
+  convertFromAscii,
+  convertFromRadix,
+  type BaseField,
+  type BaseConversion,
+} from './base-converter-logic'
 
 export default function BaseConverterTool() {
   const { t } = useT()
-  const [values, setValues] = useState<FieldValues>(EMPTY_VALUES)
+  const [values, setValues] = useState<BaseConversion>(EMPTY_CONVERSION)
   const [error, setError] = useState<string | null>(null)
 
   const handleChange = useCallback((field: BaseField, raw: string) => {
     const trimmed = raw.trim()
 
     if (trimmed === '') {
-      setValues(EMPTY_VALUES)
+      setValues(EMPTY_CONVERSION)
       setError(null)
       return
     }
@@ -46,36 +29,23 @@ export default function BaseConverterTool() {
     if (field.key === 'ascii') {
       const char = trimmed.length > 0 ? trimmed[trimmed.length - 1] : ''
       if (!char) {
-        setValues(EMPTY_VALUES)
+        setValues(EMPTY_CONVERSION)
         setError(null)
         return
       }
-      const code = char.charCodeAt(0)
-      setValues({
-        bin: code.toString(2),
-        oct: code.toString(8),
-        dec: code.toString(10),
-        hex: code.toString(16).toUpperCase(),
-        ascii: char,
-      })
+      setValues(convertFromAscii(char))
       setError(null)
       return
     }
 
-    const parsed = parseInt(trimmed, field.radix!)
-    if (isNaN(parsed)) {
+    const result = convertFromRadix(trimmed, field.radix!)
+    if (!result) {
       setValues((prev) => ({ ...prev, [field.key]: trimmed }))
       setError(t('baseconverter.invalidNumber'))
       return
     }
 
-    setValues({
-      bin: parsed.toString(2),
-      oct: parsed.toString(8),
-      dec: parsed.toString(10),
-      hex: parsed.toString(16).toUpperCase(),
-      ascii: parsed >= 0 && parsed <= 0x10ffff ? String.fromCodePoint(parsed) : '',
-    })
+    setValues(result)
     setError(null)
   }, [t])
 
