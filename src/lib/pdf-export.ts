@@ -24,6 +24,10 @@ export async function exportPdf(
       resolve()
     }
 
+    // Safety net: placed outside onload so it always starts, covering the
+    // rare browser where print() returns immediately and no event fires.
+    const safety = window.setTimeout(finish, 60_000)
+
     iframe.onload = () => {
       const win = iframe.contentWindow
       if (!win) {
@@ -31,23 +35,26 @@ export async function exportPdf(
         return
       }
 
-      // afterprint fires when the dialog closes (print OR cancel), but is
-      // unreliable for iframe printing in some browsers. matchMedia('print')
-      // is the dependable signal: it flips to false when leaving print mode,
-      // whether the user printed or cancelled.
+      // Backup signals for browsers where print() does not block.
       win.addEventListener('afterprint', finish, { once: true })
-
       const mediaQueryList = win.matchMedia('print')
       mediaQueryList.addEventListener('change', (e) => {
         if (!e.matches) finish()
       })
 
-      // Safety net: never leave the button loading forever, even if both
-      // signals somehow fail to fire.
-      window.setTimeout(finish, 30_000)
-
       win.focus()
-      win.print()
+      try {
+        // In Chrome/Edge/Firefox, print() blocks until the print dialog is
+        // dismissed — whether the user prints or cancels. Finishing right
+        // after it returns reliably clears the loading state on cancel,
+        // where afterprint/matchMedia are flaky.
+        win.print()
+      } catch {
+        // Ignore print errors (e.g. user dismissed a pre-print prompt).
+      } finally {
+        window.clearTimeout(safety)
+        finish()
+      }
     }
     iframe.srcdoc = html
   })
