@@ -15,19 +15,36 @@ export async function exportPdf(
   iframe.style.border = 'none'
   document.body.appendChild(iframe)
 
-  return new Promise((resolve) => {
+  await new Promise<void>((resolve) => {
+    let finished = false
+    const finish = () => {
+      if (finished) return
+      finished = true
+      document.body.removeChild(iframe)
+      resolve()
+    }
+
     iframe.onload = () => {
       const win = iframe.contentWindow
       if (!win) {
-        document.body.removeChild(iframe)
-        resolve()
+        finish()
         return
       }
 
-      win.addEventListener('afterprint', () => {
-        document.body.removeChild(iframe)
-        resolve()
+      // afterprint fires when the dialog closes (print OR cancel), but is
+      // unreliable for iframe printing in some browsers. matchMedia('print')
+      // is the dependable signal: it flips to false when leaving print mode,
+      // whether the user printed or cancelled.
+      win.addEventListener('afterprint', finish, { once: true })
+
+      const mediaQueryList = win.matchMedia('print')
+      mediaQueryList.addEventListener('change', (e) => {
+        if (!e.matches) finish()
       })
+
+      // Safety net: never leave the button loading forever, even if both
+      // signals somehow fail to fire.
+      window.setTimeout(finish, 30_000)
 
       win.focus()
       win.print()
